@@ -1,5 +1,8 @@
 import View_Credentials from "../../../components/Credentials/view_credentials";
 import BadgeModel from '../../../models/badge';
+import connectMongo from "../../../utils/connectMongo";
+
+
 
 export default function Badge({credentialData}) {
   return (

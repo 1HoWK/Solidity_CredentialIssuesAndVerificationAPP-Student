@@ -1,5 +1,8 @@
 import View_Credentials from "../../../components/Credentials/view_credentials";
 import CertificateModel from "../../../models/certificate";
+import connectMongo from "../../../utils/connectMongo";
+
+
 
 export default function Certificate({ credentialData }) {
   return (
