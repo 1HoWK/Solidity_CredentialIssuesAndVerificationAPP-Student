@@ -2,10 +2,10 @@ import NextAuth from "next-auth/next";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import connectMongo from "../../../utils/connectMongo";
+import connectMongo from "../../utils/connectMongo";
 
-import Educator from "../../../models/educator";
-import { verifyPassword } from "../../../utils/auth";
+import Student from "../../models/student";
+import { verifyPassword } from "../../utils/auth";
 
 export default NextAuth({
   session: {
@@ -17,22 +17,22 @@ export default NextAuth({
       async authorize(credentials) {
         await connectMongo();
 
-        const educator = await Educator.findOne({ email: credentials.email });
+        const student = await Student.findOne({ email: credentials.email });
 
-        if (!educator) {
+        if (!student) {
           throw new Error("No new User");
         }
 
         const isValid = await verifyPassword(
           credentials.password,
-          educator.password
+          student.password
         );
 
         if (!isValid) {
           throw new Error("Could not log you in");
         }
 
-        return { email: educator.email };
+        return { email: student.email };
       },
     }),
   ],

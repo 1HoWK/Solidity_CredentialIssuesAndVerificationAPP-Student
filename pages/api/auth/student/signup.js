@@ -1,12 +1,12 @@
 import connectMongo from "../../../../utils/connectMongo";
-import Educator from "../../../../models/educator";
+import Student from "../../../../models/student";
 import { hashPassword } from "../../../../utils/auth";
 
 // /**
 //  * @param {import('next').NextApiRequest} req
 //  * @param {import('next').NextApiResponse} res
 //  */
-export default async function RegisterEducator(req, res) {
+export default async function RegisterStudent(req, res) {
   if (req.method !== "POST") {
     return;
   }
@@ -19,10 +19,11 @@ export default async function RegisterEducator(req, res) {
     // console.log('CREATING DOCUMENT');
 
     console.log(req.body);
-    console.log("backedn started");
+    console.log("backend started");
 
-    const { email, password, name, phoneNum, jobTitle, orgName, orgURL , accountType} =
-      req.body;
+    // await Student.create();
+
+    const { name, email, password } = req.body;
 
     if (
       !email ||
@@ -37,28 +38,23 @@ export default async function RegisterEducator(req, res) {
       return;
     }
 
-    const emailUnique = await Educator.findOne({email:email});
+    const emailUnique = await Student.findOne({ email: email });
 
-    if(emailUnique){
+    if (emailUnique) {
       res.status(422).json({
-        message:
-          "Invalid input - the email already exist.",
+        message: "Invalid input - the email already exist.",
       });
       return;
     }
 
     const hashedPassword = await hashPassword(password);
 
-    const educator = await Educator.create({
+    const student = await Student.create({
+      name: name,
       email: email,
       password: hashedPassword,
-      name: name,
-      phoneNum: phoneNum,
-      jobTitle: jobTitle,
-      orgName: orgName,
-      orgURL: orgURL,
-      accountType:accountType,
     });
+
     // console.log('CREATED DOCUMENT');
 
     res.status(201).json({ message: "Created user!" });

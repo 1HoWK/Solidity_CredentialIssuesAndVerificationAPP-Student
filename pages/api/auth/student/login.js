@@ -1,11 +1,11 @@
 import connectMongo from "../../../../utils/connectMongo";
-import Educator from "../../../../models/educator";
+import Student from "../../../../models/Student";
 
 // /**
 //  * @param {import('next').NextApiRequest} req
 //  * @param {import('next').NextApiResponse} res
 //  */
-export default async function LoginEducator(req, res) {
+export default async function LoginStudent(req, res) {
   try {
     // console.log('CONNECTING TO MONGO');
     await connectMongo();
@@ -17,14 +17,14 @@ export default async function LoginEducator(req, res) {
 
     const { email, password } = req.body;
 
-    const educator = await Educator.findOne({
+    const student = await Student.findOne({
       email: email,
       password: password,
     });
 
-    console.log(educator);
+    console.log(student);
 
-    if(educator == null){
+    if(student == null){
       console.log('no matched');
     }else{
       console.log('matched');
@@ -32,7 +32,7 @@ export default async function LoginEducator(req, res) {
 
     // console.log('CREATED DOCUMENT');
 
-    res.json({ educator });
+    res.json({ student });
   } catch (error) {
     console.log(error);
     res.json({ error });

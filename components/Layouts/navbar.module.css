@@ -13,13 +13,15 @@
 
 .navbar_section_items_1_image{
   
-
+  width: 150px;
+  height: 40px;
   object-fit: cover;
   object-position: center;
   
 }
 
 .navbar_section_items_section {
+  /* border: red solid 2px; */
 }
 
 .navbar_section_items_section_2 {
@@ -64,8 +66,8 @@
 
 .navbar_section_items_section_2_item {
   border-radius: 1300px;
-  width: 3rem !important;
-  height: 3rem !important;
+  width: 45px !important;
+  height: 45px !important;
   margin: auto;
   border: rgb(255, 255, 255) solid 3px;
 
@@ -100,6 +102,8 @@
 .navbar_section_student{
   background-color: white;
   padding: 0.3vh 3vw;
+  height: 60px;
+  /* border: red solid 2px; */
 }
 
 .navbar_section_items_section_2_button_student {
@@ -127,7 +131,14 @@
   padding: 2vh 1rem;
   text-transform: capitalize;
 
+  font-size: 0.9rem;
+
   display: block;
+}
+
+.authFont{
+  font-size: 0.9rem !important;
+  /* border: red solid 2px; */
 }
 
 @media (max-width: 980px) {

@@ -1,12 +1,40 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Row, Col } from "antd";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 
 import styles from "./login.module.css";
 
 export default function LoginForm() {
   const router = useRouter();
+
+    const [error, setError] = useState(false);
+
+    const emailInputRef = useRef();
+    const passwordInputRef = useRef();
+
+    const loginEducator = async (event) => {
+        event.preventDefault();
+
+        const enteredEmail = emailInputRef.current.input.value;
+        const enteredPassword = passwordInputRef.current.input.value;
+
+
+        const result = await signIn('credentials', {
+            redirect: false,
+            email: enteredEmail,
+            password: enteredPassword,
+        })
+
+        console.log(result);
+
+        if(!result.error){
+            router.replace('/student/certificates');
+        }
+
+    };
 
   return (
     <div className={styles.sub_loginForm}>
@@ -27,6 +55,7 @@ export default function LoginForm() {
         initialValues={{
           remember: true,
         }}
+        onSubmitCapture={loginEducator}
       >
         <Form.Item
           name="email"
@@ -44,6 +73,7 @@ export default function LoginForm() {
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Email"
+            ref={emailInputRef}
           />
         </Form.Item>
         <Form.Item
@@ -60,6 +90,7 @@ export default function LoginForm() {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            ref={passwordInputRef}
           />
         </Form.Item>
         <Form.Item>

@@ -71,14 +71,16 @@ export default function Student() {
 
 
 
-    const { data: session, status } = useSession()
-    const [isLogin, setIsLogin] = useState(true);
+    const { data: session, status } = useSession();
+    const [isLogin, setIsLogin] = useState(false);
+
+    console.log(status);
 
     useEffect(() => {
         if (status === "authenticated") {
-            setIsLogin(false);
-        } else {
             setIsLogin(true);
+        } else {
+            setIsLogin(false);
         }
     }, [status]);
 
@@ -90,7 +92,7 @@ export default function Student() {
                         <Row
                             className={styles.navbar_section_student}
                             justify="space-between"
-                            align="center"
+                            align="middle"
                         >
                             <Col className={styles.navbar_section_items} span={4}>
                                 <Image
@@ -119,11 +121,11 @@ export default function Student() {
                                 >
                                     <Row
                                         justify="center"
-                                        align="center"
+                                        align="middle"
                                         style={{ minHeight: "100%" }}
                                     >
                                         <Col>
-                                            <Row justify="center" align="center">
+                                            <Row justify="center" align="middle">
                                                 <Col span={24}>
                                                     <Link
                                                         className={styles.drawer_nav_link}
@@ -165,82 +167,107 @@ export default function Student() {
                         <Row
                             className={styles.navbar_section_student}
                             justify="space-between"
-                            align="center"
+                            align="middle"
                         >
-                            <Col className={styles.navbar_section_items} span={3}>
-                                <Image
+                            <Col className={styles.navbar_section_items} span={5}>
+                                <img
                                     src="/images/forgotPwd.jpg"
                                     alt="this is our logo"
                                     fill
                                     priority
-                                    sizes="100%"
                                     className={styles.navbar_section_items_1_image}
                                 />
                             </Col>
-                            <Col className={styles.navbar_section_items} span={20}>
+                            <Col className={styles.navbar_section_items} span={19}>
                                 <Row
                                     className={styles.navbar_section_items_section}
                                     justify="space-between"
-                                    align="center"
+                                    align="middle"
                                 >
-                                    <Col span={20}>
-                                        <Row>
-                                            <Space size="large">
-                                                <Col>
-                                                    <Link
-                                                        className={
-                                                            styles.navbar_section_items_section_1_item_student
-                                                        }
-                                                        href="/student/certificates"
-                                                    >
-                                                        Certificates
-                                                    </Link>
-                                                </Col>
-                                                <Col>
-                                                    <Link
-                                                        className={
-                                                            styles.navbar_section_items_section_1_item_student
-                                                        }
-                                                        href="/student/badges"
-                                                    >
-                                                        Badges
-                                                    </Link>
-                                                </Col>
-                                            </Space>
-                                        </Row>
-                                    </Col>
-                                    <Col
-                                        className={styles.navbar_section_items_section_2}
-                                        span={4}
-                                    >
-                                        <Dropdown
-                                            placement="bottom"
-                                            arrow={{
-                                                pointAtCenter: true,
-                                            }}
-                                            menu={{
-                                                items,
-                                            }}
-                                            trigger={["click"]}
-                                            className={styles.navbar_section_items_section_2_dropdown}
-                                        >
-                                            <button
-                                                className={
-                                                    styles.navbar_section_items_section_2_button_student
-                                                }
-                                                onClick={(e) => e.preventDefault()}
+
+
+                                    {isLogin
+                                        ?
+                                        <>
+                                            <Col span={20}>
+                                                <Row>
+                                                    <Space size="large">
+                                                        <Col>
+                                                            <Link
+                                                                className={
+                                                                    styles.navbar_section_items_section_1_item_student
+                                                                }
+                                                                href="/student/certificates"
+                                                            >
+                                                                Certificates
+                                                            </Link>
+                                                        </Col>
+                                                        <Col>
+                                                            <Link
+                                                                className={
+                                                                    styles.navbar_section_items_section_1_item_student
+                                                                }
+                                                                href="/student/badges"
+                                                            >
+                                                                Badges
+                                                            </Link>
+                                                        </Col>
+                                                    </Space>
+                                                </Row>
+                                            </Col>
+                                            <Col
+                                                className={styles.navbar_section_items_section_2}
+                                                span={4}
                                             >
-                                                <Image
-                                                    src="/images/resetPwd.jpg"
-                                                    alt="personal image"
-                                                    fill
-                                                    priority
-                                                    sizes="100%"
-                                                    className={styles.navbar_section_items_section_2_item}
-                                                />
-                                            </button>
-                                        </Dropdown>
-                                    </Col>
+                                                <Dropdown
+                                                    placement="bottom"
+                                                    arrow={{
+                                                        pointAtCenter: true,
+                                                    }}
+                                                    menu={{
+                                                        items,
+                                                    }}
+                                                    trigger={["click"]}
+                                                    className={styles.navbar_section_items_section_2_dropdown}
+                                                >
+                                                    <button
+                                                        className={
+                                                            styles.navbar_section_items_section_2_button_student
+                                                        }
+                                                        onClick={(e) => e.preventDefault()}
+                                                    >
+                                                        <img
+                                                            src="/images/resetPwd.jpg"
+                                                            alt="personal image"
+                                                            fill
+                                                            priority
+                                                            className={styles.navbar_section_items_section_2_item}
+                                                        />
+                                                    </button>
+                                                </Dropdown>
+                                            </Col>
+                                        </>
+                                        :
+                                        <>
+                                            <Col>
+                                                {/* //search bar (if wanna do) */}
+                                            </Col>
+                                            <Col >
+                                                <Row>
+                                                    <Col style={{ marginRight: 15}}>
+                                                        <Link href="/student/signup">
+                                                            <Button className={styles.authFont}><span className={styles.authFont}>Create account</span></Button>
+                                                        </Link>
+                                                    </Col>
+                                                    <Col>
+                                                        <Link href="/student/login">
+                                                            <Button type="primary" ><span className={styles.authFont}>Sign in</span></Button>
+                                                        </Link>
+                                                    </Col>
+                                                </Row>
+                                            </Col>
+                                        </>
+                                    }
                                 </Row>
                             </Col>
                         </Row>

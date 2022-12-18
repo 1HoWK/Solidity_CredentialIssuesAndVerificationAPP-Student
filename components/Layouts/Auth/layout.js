@@ -14,7 +14,7 @@ export default function StudentAuthLayout({ imgSrc, children }) {
             span: 24,
           }}
           sm={{
-            span: 24,
+            span: 12,
           }}
           lg={{
             span: 12,
@@ -26,7 +26,7 @@ export default function StudentAuthLayout({ imgSrc, children }) {
             fill
             className={styles.standard_image}
             priority //the image that must be show first
-          ></Image>
+          />
         </Col>
 
         <Col
@@ -36,7 +36,7 @@ export default function StudentAuthLayout({ imgSrc, children }) {
             span: 24,
           }}
           sm={{
-            span: 24,
+            span: 12,
           }}
           lg={{
             span: 12,
