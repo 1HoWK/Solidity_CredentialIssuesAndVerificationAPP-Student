@@ -28,7 +28,7 @@ export default function CredentialsGrid({ items, specDeletePath }) {
       >
         {items == undefined || items.length == 0 ? (
           <div>
-            <h2>0 credentials</h2>
+            <h2>{`0 ${specDeletePath}`}</h2>
           </div>
         ) : (
           items.map((item) => {
@@ -43,11 +43,11 @@ export default function CredentialsGrid({ items, specDeletePath }) {
           })
         )}
       </Row>
-      <Row justify="center">
+      {/* <Row justify="center">
         <Col>
           <Pagination total={80} itemRender={itemRender} />
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 }
