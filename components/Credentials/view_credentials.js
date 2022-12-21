@@ -111,6 +111,7 @@ export default function View_Credentials({ credential, belongTo, isUser,Credenti
                                 ref={textAreaRef}
                                 value={`http://localhost:3000/certificates/${credential._id}`}
                                 className={styles.creden_input_link}
+                                disabled
                             />
                             <button onClick={copyToClipboard} className={styles.creden_share}>{copySuccess}</button>
                         </Row>
@@ -175,8 +176,8 @@ export default function View_Credentials({ credential, belongTo, isUser,Credenti
                     <Image
                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                         alt="credential pdf file "
-                        fill
-                        priority
+                        fill="true"
+                        priority="true"
                         className={styles.view_cert_image}
                     />
                 </Col>

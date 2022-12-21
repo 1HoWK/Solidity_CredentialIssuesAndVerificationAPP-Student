@@ -1,7 +1,5 @@
 import Web3 from "web3";
 
-console.log("some shitter");
-
 let web3;
 try {
 if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {

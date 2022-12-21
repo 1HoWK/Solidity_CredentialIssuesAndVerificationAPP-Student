@@ -95,12 +95,9 @@ export default function Student() {
                             align="middle"
                         >
                             <Col className={styles.navbar_section_items} span={4}>
-                                <Image
+                                <img
                                     src="/images/logo.svg"
                                     alt="this is our logo"
-                                    fill
-                                    priority
-                                    sizes="100%"
                                     className={styles.navbar_section_items_1_image}
                                 />
                             </Col>
@@ -173,8 +170,6 @@ export default function Student() {
                                 <img
                                     src="/images/logo.svg"
                                     alt="this is our logo"
-                                    fill
-                                    priority
                                     className={styles.navbar_section_items_1_image}
                                 />
                             </Col>
@@ -239,8 +234,6 @@ export default function Student() {
                                                         <img
                                                             src="/images/resetPwd.jpg"
                                                             alt="personal image"
-                                                            fill
-                                                            priority
                                                             className={styles.navbar_section_items_section_2_item}
                                                         />
                                                     </button>
