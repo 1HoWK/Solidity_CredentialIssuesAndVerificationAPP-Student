@@ -12,7 +12,7 @@ import Loader from '../Layouts/loader';
 
 import Certificate from '../../etheruem/certificate';
 
-export default function View_Credentials({ credential, receiver, isUser,CredentialType }) {
+export default function View_Credentials({ credential, belongTo, isUser,CredentialType }) {
 
     //for modal
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -138,7 +138,7 @@ export default function View_Credentials({ credential, receiver, isUser,Credenti
             }
 
             <Row justify="center" align="middle" className={styles.credential_block}>
-                <Col span={18}>This badge was issued to <Link href='/student/profile' className={styles.profile_link}>Lai Man Wai</Link> on {"April 01, 2022"}</Col>
+                <Col span={18}>This badge was issued to <Link href={`/student/profile/${belongTo._id}`} className={styles.profile_link}>{belongTo.name}</Link> on {credential.dateIssued}</Col>
                 <Col span={4}>
                     {
                         isUser

@@ -96,7 +96,7 @@ export default function Student() {
                         >
                             <Col className={styles.navbar_section_items} span={4}>
                                 <Image
-                                    src="/images/forgotPwd.jpg"
+                                    src="/images/logo.svg"
                                     alt="this is our logo"
                                     fill
                                     priority
@@ -171,7 +171,7 @@ export default function Student() {
                         >
                             <Col className={styles.navbar_section_items} span={5}>
                                 <img
-                                    src="/images/forgotPwd.jpg"
+                                    src="/images/logo.svg"
                                     alt="this is our logo"
                                     fill
                                     priority
@@ -189,7 +189,7 @@ export default function Student() {
                                     {isLogin
                                         ?
                                         <>
-                                            <Col span={20}>
+                                            <Col span={20} >
                                                 <Row>
                                                     <Space size="large">
                                                         <Col>
