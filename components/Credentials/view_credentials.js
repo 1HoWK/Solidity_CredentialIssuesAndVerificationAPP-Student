@@ -1,4 +1,4 @@
-import { Image, Row, Col, Button, Modal, Progress, Spin } from "antd"
+import { Image, Row, Col, Button, Input,Modal, Progress, Spin } from "antd"
 import Link from "next/link";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 
@@ -106,12 +106,10 @@ export default function View_Credentials({ credential, belongTo, isUser,Credenti
                             <label htmlFor="URL">Credential URLs</label>
                         </Row>
                         <Row>
-                            <input
-                                type="text"
+                            <Input
                                 ref={textAreaRef}
-                                value={`http://localhost:3000/certificates/${credential._id}`}
+                                value={`http://localhost:3000/${CredentialType}s/${credential._id}`}
                                 className={styles.creden_input_link}
-                                disabled
                             />
                             <button onClick={copyToClipboard} className={styles.creden_share}>{copySuccess}</button>
                         </Row>
@@ -139,7 +137,7 @@ export default function View_Credentials({ credential, belongTo, isUser,Credenti
             }
 
             <Row justify="center" align="middle" className={styles.credential_block}>
-                <Col span={18}>This badge was issued to <Link href={`/student/profile/${belongTo._id}`} className={styles.profile_link}>{belongTo.name}</Link> on {credential.dateIssued}</Col>
+                <Col span={18}>This {CredentialType} was issued to <Link href={`/student/profile/${belongTo._id}`} className={styles.profile_link}>{belongTo.name}</Link> on {credential.dateIssued}</Col>
                 <Col span={4}>
                     {
                         isUser

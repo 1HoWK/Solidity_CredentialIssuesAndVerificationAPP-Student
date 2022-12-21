@@ -8,25 +8,36 @@ import { getSession } from "next-auth/react";
 export default function Login() {
   const router = useRouter();
 
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   useEffect(() => {
-//     getSession().then((session) => {
-//       if (!session) {
-//         router.replace("/student/login");
-//       } else {
-//         setIsLoading(false);
-//       }
-//     });
-//   }, [router]);
-
-//   if (isLoading) {
-//     return <Loader />;
-//   }
-
   return (
     <StudentAuthLayout imgSrc="/images/login.jpg">
       <LoginForm />
     </StudentAuthLayout>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  try {
+    if (session) {
+      return {
+        redirect: {
+          destination: "/student/certificates",
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        Certificates: "123",
+      },
+    };
+  } catch (error) {
+    console.log(error);
+
+    return {
+      notFound: true,
+    };
+  }
+};

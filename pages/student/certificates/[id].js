@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { getSession } from "next-auth/react";
 import View_Credentials from "../../../components/Credentials/view_credentials";
 import CertificateModel from "../../../models/certificate";
 import Certificate_Student from "../../../models/certificate_student";
@@ -20,6 +21,18 @@ export default function Certificate({ credentialData, student }) {
 
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
+
+  const session = await getSession({ req: context.req });
+
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/student/login",
+          permanent: false,
+        },
+      };
+    }
+
 
   try {
     console.log("CONNECTING TO MONGO");

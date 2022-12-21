@@ -5,6 +5,7 @@ import connectMongo from "../../../utils/connectMongo";
 import Badge_Student from "../../../models/badge_student";
 import Student from "../../../models/student";
 import { Types } from "mongoose";
+import { getSession } from "next-auth/react";
 
 export default function Badge({ credentialData, student }) {
   return (
@@ -18,9 +19,20 @@ export default function Badge({ credentialData, student }) {
     </div>
   );
 }
-
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
+
+  const session = await getSession({ req: context.req });
+
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/educator_acc/login",
+          permanent: false,
+        },
+      };
+    }
+
 
   try {
     console.log("CONNECTING TO MONGO");
