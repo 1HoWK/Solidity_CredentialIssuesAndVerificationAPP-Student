@@ -7,7 +7,7 @@ import connectMongo from "../../../utils/connectMongo";
 export default function Badge({credentialData}) {
   return (
     <div>
-      <View_Credentials credential={credentialData}/>
+      <View_Credentials credential={credentialData} receiver={'deded'} isUser={true}  CredentialType="certificate"/>
     </div>
   );
 }

@@ -1,13 +1,13 @@
-import View_Credentials from "../../../components/Credentials/view_credentials";
-import CertificateModel from "../../../models/certificate";
-import connectMongo from "../../../utils/connectMongo";
+import View_Credentials from "../../components/Credentials/view_credentials";
+import CertificateModel from "../../models/certificate";
+import connectMongo from "../../utils/connectMongo";
 
 
 
 export default function Certificate({ credentialData }) {
   return (
     <div>
-      <View_Credentials credential={credentialData} receiver={'deded'} isUser={true}  CredentialType="certificate"/>
+      <View_Credentials credential={credentialData} receiver={'deded'} isUser={false} CredentialType="certificate"/>
     </div>
   );
 }

@@ -44,6 +44,7 @@ contract CredentialsFactory {
     }
 }
 
+//kickstarter
 contract Certificate {
     address public manager;
     string public title;
@@ -60,6 +61,26 @@ contract Certificate {
         title = _title;
         description = _description;
         dateIssued = _dateIssued;
+    }
+
+    function getTitle() public view returns (string) {
+        return title;
+    }
+
+    function setTitle(string _title) public {
+        title = _title;
+    }
+
+    function getDescription() public view returns (string) {
+        return description;
+    }
+
+    function setDescription(string _description) public {
+        description = _description;
+    }
+
+    function getDateIssued() public view returns (string) {
+        return dateIssued;
     }
 }
 
@@ -79,5 +100,25 @@ contract Badge {
         title = _title;
         description = _description;
         dateIssued = _dateIssued;
+    }
+
+    function getTitle() public view returns (string) {
+        return title;
+    }
+
+    function setTitle(string _title) public {
+        title = _title;
+    }
+
+    function getDescription() public view returns (string) {
+        return description;
+    }
+
+    function setDescription(string _description) public {
+        description = _description;
+    }
+
+    function getDateIssued() public view returns (string) {
+        return dateIssued;
     }
 }
