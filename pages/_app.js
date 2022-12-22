@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }) {
     <>
       <SessionProvider session={pageProps.session}>
         <Head>
-          <meta charset="UTF-8" />
+          <meta charSet="UTF-8" />
           <meta name="keywords" content="Certificate, badge, blockchain" />
           <meta name="author" content="Lai & Ho" />
           <meta
