@@ -227,7 +227,7 @@ export default function View_Credentials({
                 </>
               ) : (
                 <img
-                  src="/images/forgotPwd.jpg"
+                  src="/images/defaultBadge.png"
                   width={300}
                   height={300}
                   alt="default badge image"

@@ -71,7 +71,7 @@ export default function CredentialItem({ cert, deletePath }) {
                   </>
                 ) : (
                   <img
-                    src="/images/forgotPwd.jpg"
+                    src="/images/defaultBadge.png"
                     width={300}
                     height={300}
                     alt="default badge image"
