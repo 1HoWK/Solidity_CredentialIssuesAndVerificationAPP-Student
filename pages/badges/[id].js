@@ -1,10 +1,10 @@
-import View_Credentials from "../../../components/Credentials/view_credentials";
-import BadgeModel from "../../../models/badge";
-import connectMongo from "../../../utils/connectMongo";
-import Badge_Educator from "../../../models/badge_educator";
-import Educator from "../../../models/educator";
-import Badge_Student from "../../../models/badge_student";
-import Student from "../../../models/student";
+import View_Credentials from "../../components/Credentials/view_credentials";
+import BadgeModel from "../../models/badge";
+import connectMongo from "../../utils/connectMongo";
+import Badge_Educator from "../../models/badge_educator";
+import Educator from "../../models/educator";
+import Badge_Student from "../../models/badge_student";
+import Student from "../../models/student";
 import { Types } from "mongoose";
 import { getSession } from "next-auth/react";
 
@@ -14,7 +14,7 @@ export default function Badge({ credentialData, studentData, educatorData }) {
       <View_Credentials
         credential={credentialData}
         belongTo={studentData}
-        isUser={true}
+        isUser={false}
         IssuedBy={educatorData}
         CredentialType="badge"
       />
@@ -23,17 +23,6 @@ export default function Badge({ credentialData, studentData, educatorData }) {
 }
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
-
-  const session = await getSession({ req: context.req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/student/login",
-        permanent: false,
-      },
-    };
-  }
 
   try {
     console.log("CONNECTING TO MONGO");
