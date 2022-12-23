@@ -57,13 +57,17 @@ export default function CredentialsGrid({ items, specDeletePath }) {
       </Row>
       <Row justify="center">
         <Col>
-          <Pagination
-            pageSize={pageSize}
-            current={current}
-            total={items.length}
-            onChange={handleChange}
-            style={{ bottom: "0px" }}
-          />
+          {items.length <= pageSize ? (
+            ""
+          ) : (
+            <Pagination
+              pageSize={pageSize}
+              current={current}
+              total={items.length}
+              onChange={handleChange}
+              style={{ bottom: "0px" }}
+            />
+          )}
         </Col>
       </Row>
     </div>

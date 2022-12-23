@@ -12,6 +12,7 @@ import Loader from "../Layouts/loader";
 import Certificate from "../../etheruem/certificate";
 
 import GeneratePDF from "../utils/GeneratePDF";
+import TransformImage from "../utils/imageCloudinary";
 
 export default function View_Credentials({
   credential,
@@ -214,13 +215,26 @@ export default function View_Credentials({
               </div>
             </div>
           ) : (
-            <Image
-              src="/images/resetPwd.jpg"
-              alt="credential pdf file "
-              fill="true"
-              priority="true"
-              className={styles.view_cert_image}
-            />
+            <>
+              {credential.imageAddress ? (
+                <>
+                  <TransformImage
+                    crop={"scale"}
+                    image={credential.imageAddress}
+                    width={300}
+                    height={300}
+                  />
+                </>
+              ) : (
+                <img
+                  src="/images/forgotPwd.jpg"
+                  width={300}
+                  height={300}
+                  alt="default badge image"
+                  srcSet=""
+                />
+              )}
+            </>
           )}
         </Col>
         <Col

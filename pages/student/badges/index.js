@@ -4,10 +4,15 @@ import connectMongo from "../../../utils/connectMongo";
 import { getSession, useSession } from "next-auth/react";
 import Student from "../../../models/Student";
 import Badge_Student from "../../../models/badge_student";
+import Script from "next/script";
 
 export default function Credentials({ Badges }) {
   return (
     <div style={{ padding: "3rem 0px" }}>
+      <Script
+        src="https://widget.Cloudinary.com/v2.0/global/all.js"
+        type="text/javascript"
+      />
       <AllCredentials Credentials={Badges} path="badges" />
     </div>
   );
