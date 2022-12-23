@@ -1,16 +1,15 @@
 import { Result, Button } from "antd"
-import { useRouter } from "next/router"
+import Link from "next/link"
 
 
 export default function PageNotFound() {
-    const router = useRouter();
-
+    
     return (
         <Result
             status="404"
             title="404"
             subTitle="Sorry, the page you visited does not exist."
-            extra={<Button type="primary" onClick={()=>router.push('/student/certificates')}>Back Home</Button>}
+            extra={<Button type="primary"><Link href="/student/certificates">Back Home</Link></Button>}
         />
     )
 }
