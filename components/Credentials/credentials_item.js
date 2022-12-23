@@ -3,10 +3,12 @@ import Image from "next/image";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 import { Card, Avatar } from "antd";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 import styles from "./credentials_item.module.css";
+
+
 
 export default function CredentialItem({ cert, deletePath }) {
   const router = useRouter();
@@ -18,6 +20,8 @@ export default function CredentialItem({ cert, deletePath }) {
     />,
   ];
 
+  const pdfRef = useRef();
+
   return (
     <div>
       <Card
@@ -25,10 +29,45 @@ export default function CredentialItem({ cert, deletePath }) {
           width: 300,
         }}
         cover={
-          <img
-            alt="example"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-          />
+          <>
+            {deletePath === "certificates" ? (
+              <div className={styles.content} ref={pdfRef}>
+                <div>
+                  <div className={styles.subContent}>
+                    <h1 className={styles.userName}>username</h1>
+                    <hr style={{ width: "100%" }} />
+                    <p id="text" className={styles.paragraph}>
+                      {cert.title}
+                    </p>
+                    <p id="text" className={styles.paragraph2}>
+                      {cert.desc}
+                    </p>
+                  </div>
+                  <div className={styles.subContent2}>
+                    <img
+                      src="/images/signatureCred.png"
+                      alt="this is the signature"
+                      className={styles.signature}
+                    />
+                    <hr style={{ width: "100%" }} />
+                    <img
+                      src="/images/logo.svg"
+                      alt="this is the credBLOCK logo"
+                      className={styles.logo}
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <img
+                src="/images/resetPwd.jpg"
+                alt="my badge image"
+                width={300}
+                height={150}
+                srcSet=""
+              />
+            )}
+          </>
         }
         actions={actions}
       >

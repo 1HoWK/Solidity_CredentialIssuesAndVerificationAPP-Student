@@ -1,19 +1,21 @@
 import View_Credentials from "../../../components/Credentials/view_credentials";
 import BadgeModel from "../../../models/badge";
 import connectMongo from "../../../utils/connectMongo";
-
+import Badge_Educator from "../../../models/badge_educator";
+import Educator from "../../../models/educator";
 import Badge_Student from "../../../models/badge_student";
 import Student from "../../../models/student";
 import { Types } from "mongoose";
 import { getSession } from "next-auth/react";
 
-export default function Badge({ credentialData, student }) {
+export default function Badge({ credentialData, studentData, educatorData }) {
   return (
     <div>
       <View_Credentials
         credential={credentialData}
-        belongTo={student}
+        belongTo={studentData}
         isUser={true}
+        IssuedBy={educatorData}
         CredentialType="badge"
       />
     </div>
@@ -24,15 +26,14 @@ export const getServerSideProps = async (context) => {
 
   const session = await getSession({ req: context.req });
 
-    if (!session) {
-      return {
-        redirect: {
-          destination: "/educator_acc/login",
-          permanent: false,
-        },
-      };
-    }
-
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/educator_acc/login",
+        permanent: false,
+      },
+    };
+  }
 
   try {
     console.log("CONNECTING TO MONGO");
@@ -49,16 +50,22 @@ export const getServerSideProps = async (context) => {
       badgeID: badgeID,
     });
 
+    const badgeEducator = await Badge_Educator.findOne({
+      badgeID: badgeID,
+    });
+
     const badgeStudentID = Types.ObjectId(badgeStudent.studentID);
+    const badgeEducatorID = Types.ObjectId(badgeEducator.educatorID);
 
     const student = await Student.findById(badgeStudentID);
-
+    const educator = await Educator.findById(badgeEducatorID);
     console.log(student);
 
     return {
       props: {
         credentialData: JSON.parse(JSON.stringify(Badge)),
-        student: JSON.parse(JSON.stringify(student)),
+        studentData: JSON.parse(JSON.stringify(student)),
+        educatorData: JSON.parse(JSON.stringify(educator)),
       },
     };
   } catch (error) {
