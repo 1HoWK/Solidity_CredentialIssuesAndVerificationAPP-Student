@@ -2,16 +2,26 @@ import CredentialItem from "./credentials_item";
 
 import { Row, Col, Space, Pagination } from "antd";
 import styles from "./credential_grid.module.css";
+import { useEffect, useState } from "react";
 
 export default function CredentialsGrid({ items, specDeletePath }) {
-  const itemRender = (_, type, originalElement) => {
-    if (type === "prev") {
-      return <a>Previous</a>;
-    }
-    if (type === "next") {
-      return <a>Next</a>;
-    }
-    return originalElement;
+  const [totalPage, setTotalPage] = useState(0);
+  const [current, setCurrent] = useState(1);
+  const [minIndex, setMinIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(0);
+
+  const pageSize = 5;
+
+  useEffect(() => {
+    setTotalPage(items.length / pageSize);
+    setMinIndex(0);
+    setMaxIndex(pageSize);
+  }, []);
+
+  const handleChange = (page) => {
+    setCurrent(page);
+    setMinIndex((page - 1) * pageSize);
+    setMaxIndex(page * pageSize);
   };
 
   return (
@@ -31,23 +41,31 @@ export default function CredentialsGrid({ items, specDeletePath }) {
             <h2>{`0 ${specDeletePath}`}</h2>
           </div>
         ) : (
-          items.map((item) => {
-            return (
-              <Col
-                key={item._id}
-                className={`gutter-row ${styles.margin_bottom_card}`}
-              >
-                <CredentialItem cert={item} deletePath={specDeletePath} />
-              </Col>
-            );
+          items.map((item, index) => {
+            if (index >= minIndex && index < maxIndex) {
+              return (
+                <Col
+                  key={item._id}
+                  className={`gutter-row ${styles.margin_bottom_card}`}
+                >
+                  <CredentialItem cert={item} deletePath={specDeletePath} />
+                </Col>
+              );
+            }
           })
         )}
       </Row>
-      {/* <Row justify="center">
+      <Row justify="center">
         <Col>
-          <Pagination total={80} itemRender={itemRender} />
+          <Pagination
+            pageSize={pageSize}
+            current={current}
+            total={items.length}
+            onChange={handleChange}
+            style={{ bottom: "0px" }}
+          />
         </Col>
-      </Row> */}
+      </Row>
     </div>
   );
 }
