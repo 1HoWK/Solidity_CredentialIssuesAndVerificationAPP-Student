@@ -14,27 +14,16 @@ export default function Badge({ credentialData, studentData, educatorData }) {
       <View_Credentials
         credential={credentialData}
         belongTo={studentData}
-        isUser={true}
+        isUser={false}
         IssuedBy={educatorData}
         CredentialType="badge"
-        isBelong={true}
+        isBelong={false}
       />
     </div>
   );
 }
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
-
-  const session = await getSession({ req: context.req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/student/login",
-        permanent: false,
-      },
-    };
-  }
 
   try {
     console.log("CONNECTING TO MONGO");
@@ -45,7 +34,11 @@ export const getServerSideProps = async (context) => {
     const Badge = await BadgeModel.findById(id);
     console.log("FETCHED DOCUMENTS");
 
+    console.log(Badge);
+
     const badgeID = Types.ObjectId(Badge._id);
+
+    console.log("Stage 1");
 
     const badgeStudent = await Badge_Student.findOne({
       badgeID: badgeID,
@@ -54,6 +47,8 @@ export const getServerSideProps = async (context) => {
     const badgeEducator = await Badge_Educator.findOne({
       badgeID: badgeID,
     });
+
+    console.log("Stage 2");
 
     const badgeStudentID = Types.ObjectId(badgeStudent.studentID);
     const badgeEducatorID = Types.ObjectId(badgeEducator.educatorID);

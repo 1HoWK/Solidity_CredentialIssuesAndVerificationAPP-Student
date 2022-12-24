@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
 import { getSession } from "next-auth/react";
-import View_Credentials from "../../components/Credentials/view_credentials";
-import CertificateModel from "../../models/certificate";
-import Certificate_Educator from "../../models/certificate_educator";
-import Certificate_Student from "../../models/certificate_student";
-import Student from "../../models/student";
-import connectMongo from "../../utils/connectMongo";
-import Educator from "../../models/educator";
+import View_Credentials from "../../../components/Credentials/view_credentials";
+import CertificateModel from "../../../models/certificate";
+import Certificate_Educator from "../../../models/certificate_educator";
+import Certificate_Student from "../../../models/certificate_student";
+import Student from "../../../models/student";
+import connectMongo from "../../../utils/connectMongo";
+import Educator from "../../../models/educator";
 
 export default function Certificate({
   credentialData,
@@ -23,7 +23,7 @@ export default function Certificate({
         isUser={false}
         IssuedBy={educatorData}
         CredentialType="certificate"
-        isBelong={true}
+        isBelong={false}
       />
     </div>
   );

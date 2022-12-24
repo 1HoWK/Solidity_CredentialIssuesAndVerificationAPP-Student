@@ -23,6 +23,7 @@ export default function Certificate({
         isUser={true}
         IssuedBy={educatorData}
         CredentialType="certificate"
+        isBelong={true}
       />
     </div>
   );

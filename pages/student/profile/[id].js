@@ -1,4 +1,4 @@
-import Stud_profile_form from "../../../components/Stud_profile/stud_profile_form";
+import Stud_profile_form from "../../../components/ProfileStud/stud_profile_form";
 
 import Student from "../../../models/student";
 import Certificate_Student from "../../../models/certificate_student";

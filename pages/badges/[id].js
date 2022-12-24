@@ -17,6 +17,7 @@ export default function Badge({ credentialData, studentData, educatorData }) {
         isUser={false}
         IssuedBy={educatorData}
         CredentialType="badge"
+        isBelong={true}
       />
     </div>
   );

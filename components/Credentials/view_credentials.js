@@ -20,6 +20,7 @@ export default function View_Credentials({
   isUser,
   IssuedBy,
   CredentialType,
+  isBelong,
 }) {
   //for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -101,76 +102,90 @@ export default function View_Credentials({
 
   return (
     <div>
-      {isUser ? (
-        <Modal
-          title="Share a Link"
-          width={400}
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Row>
-            <label htmlFor="URL">Credential URLs</label>
-          </Row>
-          <Row>
-            <Input
-              ref={textAreaRef}
-              value={`http://localhost:3000/${CredentialType}s/${credential._id}`}
-              className={styles.creden_input_link}
-            />
-            <button onClick={copyToClipboard} className={styles.creden_share}>
-              {copySuccess}
-            </button>
-          </Row>
-        </Modal>
-      ) : (
-        <Modal
-          title="Verification"
-          width={400}
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <Row justify="center" align="middle">
-            <Col span={12} className={styles.loader_section}>
-              {isLoading ? (
-                <Progress type="circle" percent={100} />
+      {isBelong ? (
+        <>
+          {isUser ? (
+            <Modal
+              title="Share a Link"
+              width={400}
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <Row>
+                <label htmlFor="URL">Credential URLs</label>
+              </Row>
+              <Row>
+                <Input
+                  ref={textAreaRef}
+                  value={`http://localhost:3000/${CredentialType}s/${credential._id}`}
+                  className={styles.creden_input_link}
+                />
+                <button
+                  onClick={copyToClipboard}
+                  className={styles.creden_share}
+                >
+                  {copySuccess}
+                </button>
+              </Row>
+            </Modal>
+          ) : (
+            <Modal
+              title="Verification"
+              width={400}
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <Row justify="center" align="middle">
+                <Col span={12} className={styles.loader_section}>
+                  {isLoading ? (
+                    <Progress type="circle" percent={100} />
+                  ) : (
+                    <Spin size="large" />
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12} className={styles.loader_section2}>
+                  <p className={styles.verification_text}>{processText}</p>
+                </Col>
+              </Row>
+            </Modal>
+          )}
+
+          <Row
+            justify="center"
+            align="middle"
+            className={styles.credential_block}
+          >
+            <Col span={18}>
+              This {CredentialType} was issued to{" "}
+              <Link
+                href={`/student/profile/${belongTo._id}`}
+                className={styles.profile_link}
+              >
+                {belongTo.name}
+              </Link>{" "}
+              on {credential.dateIssued}
+            </Col>
+            <Col span={4}>
+              {isUser ? (
+                <Button type="primary" onClick={showModal}>
+                  Share
+                </Button>
               ) : (
-                <Spin size="large" />
+                // <Button type="primary" onClick={showModal} >Verify Certificate</Button>
+                <Button type="primary" onClick={showModal2}>
+                  Verify Credential
+                </Button>
               )}
             </Col>
           </Row>
-          <Row>
-            <Col span={12} className={styles.loader_section2}>
-              <p className={styles.verification_text}>{processText}</p>
-            </Col>
-          </Row>
-        </Modal>
+        </>
+      ) : (
+        ""
       )}
-      <Row justify="center" align="middle" className={styles.credential_block}>
-        <Col span={18}>
-          This {CredentialType} was issued to{" "}
-          <Link
-            href={`/student/profile/${belongTo._id}`}
-            className={styles.profile_link}
-          >
-            {belongTo.name}
-          </Link>{" "}
-          on {credential.dateIssued}
-        </Col>
-        <Col span={4}>
-          {isUser ? (
-            <Button type="primary" onClick={showModal}>
-              Share
-            </Button>
-          ) : (
-            // <Button type="primary" onClick={showModal} >Verify Certificate</Button>
-            <Button type="primary" onClick={showModal2}>
-              Verify Credential
-            </Button>
-          )}
-        </Col>
-      </Row>
       <Row className={styles.view_cert_container} wrap>
         <Col
           className={styles.view_cert_section1}
@@ -259,7 +274,7 @@ export default function View_Credentials({
             <Col span={24}>
               <p className={styles.issuedBy}>
                 Issued by{" "}
-                <Link href="/student/certificates">
+                <Link href={`/educator/profile/${IssuedBy._id}`}>
                   <span className={styles.link}>{IssuedBy.name}</span>
                 </Link>
               </p>
