@@ -4,13 +4,13 @@ import { Row, Col, Space, Pagination } from "antd";
 import styles from "./credential_grid.module.css";
 import { useEffect, useState } from "react";
 
-export default function CredentialsGrid({ items, specDeletePath }) {
+export default function CredentialsGrid({ items, specDeletePath ,itemPageSize, isVisitor }) {
   const [totalPage, setTotalPage] = useState(0);
   const [current, setCurrent] = useState(1);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
 
-  const pageSize = 5;
+  const pageSize = itemPageSize;
 
   useEffect(() => {
     setTotalPage(items.length / pageSize);
@@ -48,7 +48,7 @@ export default function CredentialsGrid({ items, specDeletePath }) {
                   key={item._id}
                   className={`gutter-row ${styles.margin_bottom_card}`}
                 >
-                  <CredentialItem cert={item} deletePath={specDeletePath} />
+                  <CredentialItem cert={item} deletePath={specDeletePath} isVisitor={isVisitor}/>
                 </Col>
               );
             }

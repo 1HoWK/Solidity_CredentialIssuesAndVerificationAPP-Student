@@ -5,7 +5,7 @@ import { Button, Menu, Layout, Space, Dropdown, Drawer, Row, Col } from "antd";
 import Link from "next/link";
 import Image from "next/image";
 
-import { BookOutlined, UserOutlined, BarsOutlined } from "@ant-design/icons";
+import { BookOutlined, UserOutlined, BarsOutlined , DownOutlined} from "@ant-design/icons";
 
 
 import styles from "./navbar.module.css";
@@ -56,7 +56,7 @@ export default function Student() {
 
     const items = [
         {
-            label: <Link href="/educator/profile">Profile</Link>,
+            label: <Link href="/student/profile">Profile</Link>,
             key: "0",
         },
 
@@ -144,7 +144,7 @@ export default function Student() {
                                                 alignItems: "flex-end",
                                             }}
                                             onClick={() => {
-                                                router.push("/educator/profile");
+                                                router.push("/student/profile");
                                             }}
                                         >
                                             <a className={styles.drawer_nav_link_danger}>
@@ -184,7 +184,7 @@ export default function Student() {
                                     {isLogin
                                         ?
                                         <>
-                                            <Col span={20} >
+                                            <Col span={18} >
                                                 <Row>
                                                     <Space size="large">
                                                         <Col>
@@ -212,7 +212,7 @@ export default function Student() {
                                             </Col>
                                             <Col
                                                 className={styles.navbar_section_items_section_2}
-                                                span={4}
+                                                span={6}
                                             >
                                                 <Dropdown
                                                     placement="bottom"
@@ -231,11 +231,18 @@ export default function Student() {
                                                         }
                                                         onClick={(e) => e.preventDefault()}
                                                     >
-                                                        <img
-                                                            src="/images/resetPwd.jpg"
-                                                            alt="personal image"
-                                                            className={styles.navbar_section_items_section_2_item}
-                                                        />
+                                                        <Row justify="center" align="middle">
+                                                            <Col>
+                                                                <span className={
+                                                                    styles.navbar_section_items_section_1_item_student}
+                                                                    style={{ textTransform: "lowercase", }}>
+                                                                    {session.user.email}
+                                                                </span>
+                                                            </Col>
+                                                            <Col>
+                                                                <DownOutlined style={{ color: "black", }} />
+                                                            </Col>
+                                                        </Row>
                                                     </button>
                                                 </Dropdown>
                                             </Col>

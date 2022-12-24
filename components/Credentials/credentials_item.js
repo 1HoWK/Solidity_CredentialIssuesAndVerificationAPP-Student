@@ -10,13 +10,22 @@ import styles from "./credentials_item.module.css";
 
 import TransformImage from "../utils/imageCloudinary";
 
-export default function CredentialItem({ cert, deletePath }) {
+export default function CredentialItem({ cert, deletePath , isVisitor}) {
   const router = useRouter();
+
+  const handleLink = () =>{
+    if(isVisitor){
+      router.push(`/${deletePath}/${cert._id}`)
+    }else{
+      router.push(`/student/${deletePath}/${cert._id}`)
+    }
+
+  }
 
   let actions = [
     <EyeOutlined
       key="view"
-      onClick={() => router.push(`/student/${deletePath}/${cert._id}`)}
+      onClick={handleLink}
     />,
   ];
 

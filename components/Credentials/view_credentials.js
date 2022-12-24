@@ -1,6 +1,6 @@
 import { Image, Row, Col, Button, Input, Modal, Progress, Spin } from "antd";
 import Link from "next/link";
-import { CheckCircleTwoTone } from "@ant-design/icons";
+import { CheckCircleTwoTone, LeftOutlined } from "@ant-design/icons";
 
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -147,7 +147,6 @@ export default function View_Credentials({
           </Row>
         </Modal>
       )}
-
       <Row justify="center" align="middle" className={styles.credential_block}>
         <Col span={18}>
           This {CredentialType} was issued to{" "}
