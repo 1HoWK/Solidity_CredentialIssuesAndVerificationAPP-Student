@@ -37,6 +37,13 @@ export default async function resetPWD(req, res) {
 
     console.log(emailRecieved);
 
+    if (!emailRecieved || !emailRecieved.includes("@")) {
+      res.status(422).json({
+        message: "Invalid email",
+      });
+      return;
+    }
+
     const verifiedStudent = await Student.findOne({ email: emailRecieved });
 
     console.log(verifiedStudent);
@@ -74,7 +81,10 @@ export default async function resetPWD(req, res) {
 
       console.log("got email inside");
     } else {
-      res.status(201).json({ message: "invalid email!" });
+      res.status(422).json({
+        message: "Email is not exist.",
+      });
+      return;
     }
 
     res.status(201).json({ message: "sent reset password email!" });

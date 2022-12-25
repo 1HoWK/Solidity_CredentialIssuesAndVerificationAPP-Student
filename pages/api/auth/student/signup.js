@@ -33,7 +33,7 @@ export default async function RegisterStudent(req, res) {
     ) {
       res.status(422).json({
         message:
-          "Invalid input - password should also be at least 5 characters long.",
+          "Invalid input data",
       });
       return;
     }
@@ -42,7 +42,7 @@ export default async function RegisterStudent(req, res) {
 
     if (emailUnique) {
       res.status(422).json({
-        message: "Invalid input - the email already exist.",
+        message: "Email already exist.",
       });
       return;
     }

@@ -20,7 +20,7 @@ export default NextAuth({
         const student = await Student.findOne({ email: credentials.email });
 
         if (!student) {
-          throw new Error("No new User");
+          throw new Error("Incorrect email or password");
         }
 
         const isValid = await verifyPassword(
@@ -29,7 +29,7 @@ export default NextAuth({
         );
 
         if (!isValid) {
-          throw new Error("Could not log you in");
+          throw new Error("Incorrect email or password");
         }
 
         return { email: student.email };
