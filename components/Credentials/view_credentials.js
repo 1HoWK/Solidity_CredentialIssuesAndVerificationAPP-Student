@@ -10,6 +10,7 @@ import styles from "./view_credentials.module.css";
 import Loader from "../Layouts/loader";
 
 import Certificate from "../../etheruem/certificate";
+import Badge from "../../etheruem/badge";
 
 import GeneratePDF from "../utils/GeneratePDF";
 import TransformImage from "../utils/imageCloudinary";
@@ -25,8 +26,13 @@ export default function View_Credentials({
   //for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const router = useRouter();
+
   const [processText, setProcessText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [error, setError] = useState("");
+  const [isModified, setIsModified] = useState(false);
 
   const showProcess = async () => {
     setIsLoading(false);
@@ -39,13 +45,157 @@ export default function View_Credentials({
       const dateIssued = await certificate.methods.getDateIssued().call();
 
       if (credential.title != title) {
-        //update title
+        setIsModified(true);
+        try {
+          const res = await fetch(`/api/${CredentialType}s/updateTitle`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              certificate: credential,
+              title: title,
+            }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            throw new Error(result.message || "Something went wrong!");
+          }
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+        }
       }
       if (credential.desc != description) {
-        //update description
+        setIsModified(true);
+        try {
+          const res = await fetch(`/api/${CredentialType}s/updateDesc`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              certificate: credential,
+              desc: description,
+            }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            throw new Error(result.message || "Something went wrong!");
+          }
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+        }
       }
       if (credential.dateIssued != dateIssued) {
-        //update dateIssued
+        setIsModified(true);
+        try {
+          const res = await fetch(`/api/${CredentialType}s/updateDateIssued`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              certificate: credential,
+              dateIssued: dateIssued,
+            }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            throw new Error(result.message || "Something went wrong!");
+          }
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+        }
+      }
+    }
+
+    if (CredentialType === "badge") {
+      const badge = Badge(credential.address);
+
+      const title = await badge.methods.getTitle().call();
+      const description = await badge.methods.getDescription().call();
+      const dateIssued = await badge.methods.getDateIssued().call();
+
+      if (credential.title != title) {
+        setIsModified(true);
+        try {
+          const res = await fetch(`/api/${CredentialType}s/updateTitle`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              badge: credential,
+              title: title,
+            }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            throw new Error(result.message || "Something went wrong!");
+          }
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+        }
+      }
+      if (credential.desc != description) {
+        setIsModified(true);
+        try {
+          const res = await fetch(`/api/${CredentialType}s/updateDesc`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              badge: credential,
+              desc: description,
+            }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            throw new Error(result.message || "Something went wrong!");
+          }
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+        }
+      }
+      if (credential.dateIssued != dateIssued) {
+        setIsModified(true);
+        try {
+          const res = await fetch(`/api/${CredentialType}s/updateDateIssued`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              badge: credential,
+              dateIssued: dateIssued,
+            }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            throw new Error(result.message || "Something went wrong!");
+          }
+        } catch (err) {
+          console.log(err);
+          setError(err.message);
+        }
       }
     }
 
@@ -68,14 +218,30 @@ export default function View_Credentials({
   const showModal2 = () => {
     setIsModalOpen(true);
     showProcess();
+    console.log("isModified");
+    console.log(isModified);
+    if (isModified) {
+      router.push(`/${CredentialType}s/${credential._id}`);
+    }
+
   };
 
   const handleOk = () => {
     setIsModalOpen(false);
+    console.log("isModified");
+    console.log(isModified);
+    if (isModified) {
+      router.push(`/${CredentialType}s/${credential._id}`);
+    }
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    console.log("isModified");
+    console.log(isModified);
+    if (isModified) {
+      router.push(`/${CredentialType}s/${credential._id}`);
+    }
   };
 
   //for copy text
