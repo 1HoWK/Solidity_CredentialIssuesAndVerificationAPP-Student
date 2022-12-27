@@ -64,7 +64,7 @@ export default function Student({studentID}) {
             type: "divider",
         },
         {
-            label: <Link href={`/student/accountSetting`}>Account Setting</Link>,
+            label: <Link href={`/student/profile/accountSetting`}>Account Setting</Link>,
             key: "1",
         },
 
