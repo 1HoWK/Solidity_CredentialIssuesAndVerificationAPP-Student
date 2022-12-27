@@ -8,7 +8,15 @@ const recipientSchema = new Schema({
   email: {
     type: String,
     required: true,
+  },
+  verificationCode: {
+    type: String,
+    required: true,
     unique: true,
+  },
+  hasClaimed: {
+    type: Boolean,
+    required: true,
   },
 });
 

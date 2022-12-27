@@ -24,6 +24,8 @@ export default function Certificate({
         IssuedBy={educatorData}
         CredentialType="certificate"
         isBelong={true}
+        isClaim={false}
+        recipient={{ hasClaimed: false }}
       />
     </div>
   );

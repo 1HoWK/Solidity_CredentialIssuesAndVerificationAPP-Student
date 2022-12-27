@@ -18,6 +18,8 @@ export default function Badge({ credentialData, studentData, educatorData }) {
         IssuedBy={educatorData}
         CredentialType="badge"
         isBelong={true}
+        isClaim={false}
+        recipient={{ hasClaimed: false }}
       />
     </div>
   );

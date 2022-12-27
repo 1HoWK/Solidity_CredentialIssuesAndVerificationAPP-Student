@@ -1,6 +1,6 @@
 import { Image, Row, Col, Button, Input, Modal, Progress, Spin } from "antd";
 import Link from "next/link";
-import { CheckCircleTwoTone, LeftOutlined } from "@ant-design/icons";
+import { CheckCircleTwoTone, LeftOutlined, LoadingOutlined } from "@ant-design/icons";
 
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -14,6 +14,7 @@ import Badge from "../../etheruem/badge";
 
 import GeneratePDF from "../utils/GeneratePDF";
 import TransformImage from "../utils/imageCloudinary";
+import { getSession, useSession } from "next-auth/react";
 
 export default function View_Credentials({
   credential,
@@ -22,6 +23,8 @@ export default function View_Credentials({
   IssuedBy,
   CredentialType,
   isBelong,
+  isClaim,
+  recipient,
 }) {
   //for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,6 +36,80 @@ export default function View_Credentials({
 
   const [error, setError] = useState("");
   const [isModified, setIsModified] = useState(false);
+
+  const { data: session, status } = useSession()
+
+  const [isClaimLoading, setIsClaimLoading] = useState(false);
+
+
+  const claimCredential = async () => {
+
+    console.log(session.user.email);
+
+    if (CredentialType === "certificate") {
+      setIsClaimLoading(true)
+
+      try {
+        const res = await fetch(`/api/${CredentialType}s/claim`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            certificate: credential,
+            studentEmail: session.user.email,
+            recipient: recipient,
+          }),
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          throw new Error(result.message || "Something went wrong!");
+        }
+
+        router.push(`/${CredentialType}s/claim/${credential._id}?vc=${recipient._id}`);
+
+      } catch (err) {
+        console.log(err);
+        setError(err.message);
+      }
+
+    }
+
+    if (CredentialType === "badge") {
+      setIsClaimLoading(true)
+
+      try {
+        const res = await fetch(`/api/${CredentialType}s/claim`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            badge: credential,
+            studentEmail: session.user.email,
+            recipient: recipient,
+          }),
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          throw new Error(result.message || "Something went wrong!");
+        }
+
+        router.push(`/${CredentialType}s/claim/${credential._id}?vc=${recipient._id}`);
+
+      } catch (err) {
+        console.log(err);
+        setError(err.message);
+      }
+
+    }
+
+    setIsClaimLoading(false);
+  }
 
   const showProcess = async () => {
     setIsLoading(false);
@@ -244,6 +321,15 @@ export default function View_Credentials({
     }
   };
 
+  const antIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 24,
+      }}
+      spin
+    />
+  );
+
   //for copy text
   const [copySuccess, setCopySuccess] = useState("Copy");
   const textAreaRef = useRef(null);
@@ -320,35 +406,92 @@ export default function View_Credentials({
             </Modal>
           )}
 
-          <Row
-            justify="center"
-            align="middle"
-            className={styles.credential_block}
-          >
-            <Col span={18}>
-              This {CredentialType} was issued to{" "}
-              <Link
-                href={`/student/profile/${belongTo._id}`}
-                className={styles.profile_link}
-              >
-                {belongTo.name}
-              </Link>{" "}
-              on {credential.dateIssued}
-            </Col>
-            <Col span={4}>
-              {isUser ? (
-                <Button type="primary" onClick={showModal}>
-                  Share
-                </Button>
-              ) : (
-                // <Button type="primary" onClick={showModal} >Verify Certificate</Button>
-                <Button type="primary" onClick={showModal2}>
-                  Verify Credential
-                </Button>
-              )}
-            </Col>
-          </Row>
+          <>
+            {isClaim
+              ?
+              <>
+                {
+                  recipient.hasClaimed
+                    ?
+                    <>
+                      <Row
+                        justify="center"
+                        align="middle"
+                        className={styles.credential_block}
+                      >
+                        <Col span={18}>
+                          This {CredentialType} was claimed by someone.
+                        </Col>
+                      </Row>
+                    </>
+                    :
+                    <>
+                      <Row
+                        justify="center"
+                        align="middle"
+                        className={styles.credential_block}
+                      >
+                        <Col span={18}>
+                          This {CredentialType} was issued to you, Please click the claim to claim it!
+                        </Col>
+                        <Col span={4}>
+                          {session ? (
+                            <Button type="primary" onClick={claimCredential}>
+                              {isClaimLoading
+                                ?
+                                <Spin indicator={antIcon} />
+                                :
+                                <>
+                                  Claim
+                                </>
+                              }
+                            </Button>
+                          ) : (
+                            // <Button type="primary" onClick={showModal} >Verify Certificate</Button>
+                            <Button type="primary" onClick={() => router.push('/student/login')}>
+                              Login Before Claim
+                            </Button>
+                          )}
+                        </Col>
+                      </Row>
+                    </>
+                }
+              </>
+              :
+              <>
+                <Row
+                  justify="center"
+                  align="middle"
+                  className={styles.credential_block}
+                >
+                  <Col span={18}>
+                    This {CredentialType} was issued to{" "}
+                    <Link
+                      href={`/student/profile/${belongTo._id}`}
+                      className={styles.profile_link}
+                    >
+                      {belongTo.name}
+                    </Link>{" "}
+                    on {credential.dateIssued}
+                  </Col>
+                  <Col span={4}>
+                    {isUser ? (
+                      <Button type="primary" onClick={showModal}>
+                        Share
+                      </Button>
+                    ) : (
+                      // <Button type="primary" onClick={showModal} >Verify Certificate</Button>
+                      <Button type="primary" onClick={showModal2}>
+                        Verify Credential
+                      </Button>
+                    )}
+                  </Col>
+                </Row>
+              </>
+            }
+          </>
         </>
+
       ) : (
         ""
       )}

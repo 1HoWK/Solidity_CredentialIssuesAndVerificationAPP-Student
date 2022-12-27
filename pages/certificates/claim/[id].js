@@ -8,35 +8,40 @@ import Certificate_Educator from "../../../models/certificate_educator";
 import connectMongo from "../../../utils/connectMongo";
 import Educator from "../../../models/educator";
 
+import Recipient from "../../../models/recipient";
+
 export default function Certificate({
   credentialData,
   educatorData,
+  recipientData,
 }) {
   return (
     <div>
       {console.log("educator here")}
-      {console.log(educatorData)}
+      {console.log(recipientData)}
       <View_Credentials
         credential={credentialData}
         belongTo={''}
         isUser={false}
         IssuedBy={educatorData}
         CredentialType="certificate"
-        isBelong={false}
-        isClaim={false}
-        recipient={{ hasClaimed: false }}
+        isBelong={true}
+        isClaim={true}
+        recipient={recipientData}
       />
     </div>
   );
 }
 
 export const getServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { id, vc } = context.query;
 
   try {
     console.log("CONNECTING TO MONGO");
     await connectMongo();
     console.log("CONNECTED TO MONGO");
+
+    const recipient = await Recipient.findById(vc);
 
     console.log("FETCHING DOCUMENTS");
     const Certificate = await CertificateModel.findById(id);
@@ -47,8 +52,8 @@ export const getServerSideProps = async (context) => {
 
     const certID = Types.ObjectId(Certificate._id);
 
-    console.log("111111111111111111111111111111111");
-    // const certStudent = await Certificate_Student.findOne({
+    // console.log("111111111111111111111111111111111");
+    // const certStudent = await Certificate_Student.create({
     //   certificateID: certID,
     // });
 
@@ -56,6 +61,7 @@ export const getServerSideProps = async (context) => {
       certificateID: certID,
     });
 
+    // console.log("certStudent");
     // console.log(certStudent);
 
     // const certStudentID = Types.ObjectId(certStudent.studentID);
@@ -71,6 +77,7 @@ export const getServerSideProps = async (context) => {
         credentialData: JSON.parse(JSON.stringify(Certificate)),
         // studentData: JSON.parse(JSON.stringify(student)),
         educatorData: JSON.parse(JSON.stringify(educator)),
+        recipientData: JSON.parse(JSON.stringify(recipient)),
       },
     };
   } catch (error) {

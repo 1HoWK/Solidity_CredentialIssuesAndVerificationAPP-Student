@@ -38,7 +38,10 @@ export default function LoginForm() {
         throw new Error(result.error || "message something went wrong");
       }
 
-      await router.push("/student/certificates");
+      // await router.push("/student/certificates");
+      await router.back();
+
+
     } catch (err) {
       console.log(err);
       setError(err.message);

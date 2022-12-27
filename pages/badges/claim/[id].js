@@ -1,47 +1,52 @@
+import { Types } from "mongoose";
+import { getSession } from "next-auth/react";
 import View_Credentials from "../../../components/Credentials/view_credentials";
 import BadgeModel from "../../../models/badge";
 import connectMongo from "../../../utils/connectMongo";
-import Badge_Educator from "../../../models/badge_educator";
 import Educator from "../../../models/educator";
-// import Badge_Student from "../../../models/badge_student";
-// import Student from "../../../models/student";
-import { Types } from "mongoose";
-import { getSession } from "next-auth/react";
 
-export default function Badge({ credentialData, educatorData }) {
+import Recipient from "../../../models/recipient";
+import Badge_Educator from "../../../models/badge_educator";
+
+export default function Badge({ credentialData, educatorData, recipientData }) {
   return (
     <div>
+      {console.log("educator here")}
+      {console.log(recipientData)}
       <View_Credentials
         credential={credentialData}
-        belongTo={''}
+        belongTo={""}
         isUser={false}
         IssuedBy={educatorData}
         CredentialType="badge"
-        isBelong={false}
-        isClaim={false}
-        recipient={{ hasClaimed: false }}
+        isBelong={true}
+        isClaim={true}
+        recipient={recipientData}
       />
     </div>
   );
 }
+
 export const getServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { id, vc } = context.query;
 
   try {
     console.log("CONNECTING TO MONGO");
     await connectMongo();
     console.log("CONNECTED TO MONGO");
 
+    const recipient = await Recipient.findById(vc);
+
     console.log("FETCHING DOCUMENTS");
-    const Badge = await BadgeModel.findById(id);
+    const badgeData = await BadgeModel.findById(id);
+
     console.log("FETCHED DOCUMENTS");
 
-    console.log(Badge);
+    console.log(badgeData);
 
-    const badgeID = Types.ObjectId(Badge._id);
+    const badgeID = Types.ObjectId(badgeData._id);
 
-    console.log("Stage 1");
-
+    // console.log("111111111111111111111111111111111");
     // const badgeStudent = await Badge_Student.findOne({
     //   badgeID: badgeID,
     // });
@@ -50,21 +55,22 @@ export const getServerSideProps = async (context) => {
       badgeID: badgeID,
     });
 
-    console.log("Stage 2");
-    // console.log(badgeStudent)
+    // console.log(badgeStudent);
 
     // const badgeStudentID = Types.ObjectId(badgeStudent.studentID);
     const badgeEducatorID = Types.ObjectId(badgeEducator.educatorID);
-
+    console.log("2222222222222222222222222222222222");
     // const student = await Student.findById(badgeStudentID);
     const educator = await Educator.findById(badgeEducatorID);
-    // console.log(student);
+    console.log("3333333333333333333333333333333333");
 
+    // console.log(student);
     return {
       props: {
-        credentialData: JSON.parse(JSON.stringify(Badge)),
+        credentialData: JSON.parse(JSON.stringify(badgeData)),
         // studentData: JSON.parse(JSON.stringify(student)),
         educatorData: JSON.parse(JSON.stringify(educator)),
+        recipientData: JSON.parse(JSON.stringify(recipient)),
       },
     };
   } catch (error) {

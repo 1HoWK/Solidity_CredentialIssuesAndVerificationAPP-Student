@@ -5,84 +5,138 @@ import connectMongo from "../../../utils/connectMongo";
 import Educator from "../../../models/educator";
 import Certificate_Educator from "../../../models/certificate_educator";
 import Badge_Educator from "../../../models/badge_educator";
-import Certificate from "../../../models/certificate";
-import Badge from "../../../models/badge";
+import CertificateModel from "../../../models/certificate";
+import BadgeModel from "../../../models/badge";
 import { Col, Row } from "antd";
+import { Types } from "mongoose";
 
-
-export default function profile({ educatorData, certificatesData, badgesData }) {
-
-
-    return (
-        <div>
-            <Edu_profile_form details={educatorData} />
-            <Row>
-                <Col span={12}>
-                    <All_groups groups={certificatesData} title={"Certificates"} path={"certificates"}/>
-                </Col>
-                <Col span={12}>
-                    <All_groups groups={badgesData} title={"Badges"} path={"badges"}/>
-                </Col>
-            </Row>
-
-        </div>
-    );
+export default function profile({
+  educatorData,
+  certificatesData,
+  badgesData,
+}) {
+  return (
+    <div>
+      <Edu_profile_form details={educatorData} />
+      <Row>
+        <Col span={12}>
+          <All_groups
+            groups={certificatesData}
+            title={"Certificates"}
+            path={"certificates"}
+          />
+        </Col>
+        <Col span={12}>
+          <All_groups groups={badgesData} title={"Badges"} path={"badges"} />
+        </Col>
+      </Row>
+    </div>
+  );
 }
 
 export const getServerSideProps = async (context) => {
-    const { id } = context.query;
+  const { id } = context.query;
 
-    try {
-        await connectMongo();
+  try {
+    await connectMongo();
 
-        const educator = await Educator.findById(id);
+    const educator = await Educator.findById(id);
 
-        const certEducator = await Certificate_Educator.find({
-            educatorID: educator._id,
-        });
+    const certArr = await Certificate_Educator.find({
+      educatorID: educator._id,
+    });
 
-        const badgeEducator = await Badge_Educator.find({
-            educatorID: educator._id,
-        });
+    const badgeArr = await Badge_Educator.find({
+      educatorID: educator._id,
+    });
 
-        // console.log("stage 1");
-        // console.log(certEducator);
-        // console.log(badgeEducator);
 
-        const certificates = certEducator.map(async (certStud) => {
-            return await Certificate.findById(certStud.certificateID);
-        });
+    console.log("start");
+    //start
+    const temp1Badge = await BadgeModel.find().distinct("address");
 
-        const badges = badgeEducator.map(async (badgeStud) => {
-            return await Badge.findById(badgeStud.badgeID);
-        });
+    const temp1 = new Map();
+    console.log("start-1");
 
-        // console.log("stage 2");
+    const badges = await badgeArr.map(async (tempBadgeID) => {
+      console.log("here-1");
 
-        const certificatesData = await Promise.all(certificates).then((values) => {
-            return values;
-        });
+      const badge = await BadgeModel.findOne({
+        _id: tempBadgeID.badgeID,
+      });
+      console.log("here-2");
+      console.log(badge);
 
-        const badgesData = await Promise.all(badges).then((values) => {
-            return values;
-        });
+      if (!temp1.get(badge.address)) {
+        console.log("running");
+        temp1.set(badge.address, badge._id);
+      }
 
-        // console.log("stage 3");
-        // console.log(certificatesData);
-        // console.log(badgesData);
-        // console.log("the end");
+      return badge;
+    });
 
-        return {
-            props: {
-                educatorData: JSON.parse(JSON.stringify(educator)),
-                certificatesData: JSON.parse(JSON.stringify(certificatesData)),
-                badgesData: JSON.parse(JSON.stringify(badgesData)),
-            },
-        };
-    } catch (error) {
-        console.log("it went here again")
-        return {
-            notFound: true,
-        };
-    }
+    console.log("start-2");
+    const badgeData = await Promise.all(badges).then((values) => {
+      return values;
+    });
+    console.log("start-3");
+    const finalCrendentials = [];
+
+    await temp1.forEach(async (value, key) => {
+      console.log(key);
+      let objectKey = Types.ObjectId(value);
+      const cert = await BadgeModel.findById(objectKey);
+
+      finalCrendentials.push(cert);
+    });
+
+    console.log("start ---- 2");
+
+    const tempCertificate = await CertificateModel.find().distinct("address");
+
+    const temp = new Map();
+
+    const certificates = await certArr.map(async (tempBadgeID) => {
+      const certificate = await CertificateModel.findById({
+        _id: tempBadgeID.certificateID,
+      });
+
+      if (!temp.get(certificate.address)) {
+        console.log("running");
+        temp.set(certificate.address, certificate._id);
+      }
+
+      return certificate;
+    });
+
+    const certificatesData = await Promise.all(certificates).then((values) => {
+      return values;
+    });
+
+    const finalCert = [];
+
+    await temp.forEach(async (value, key) => {
+      console.log(key);
+      let objectKey = Types.ObjectId(value);
+      const cert = await CertificateModel.findById(objectKey);
+
+      finalCert.push(cert);
+    });
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+
+    return {
+      props: {
+        educatorData: JSON.parse(JSON.stringify(educator)),
+        certificatesData: JSON.parse(JSON.stringify(finalCert)),
+        badgesData: JSON.parse(JSON.stringify(finalCrendentials)),
+      },
+    };
+  } catch (error) {
+    console.log("it went here again");
+    return {
+      notFound: true,
+    };
+  }
 };

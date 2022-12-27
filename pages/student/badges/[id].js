@@ -41,6 +41,8 @@ export const getServerSideProps = async (context) => {
     await connectMongo();
     console.log("CONNECTED TO MONGO");
 
+    
+
     console.log("FETCHING DOCUMENTS");
     const Badge = await BadgeModel.findById(id);
     console.log("FETCHED DOCUMENTS");
