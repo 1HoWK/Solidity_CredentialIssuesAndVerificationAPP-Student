@@ -14,6 +14,8 @@ export default function ResetPwd({ studentData }) {
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
 
+  try{
+
     const student = await Student.findById(id);
 
     return {
