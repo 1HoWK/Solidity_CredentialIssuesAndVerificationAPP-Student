@@ -10,7 +10,7 @@ import { BookOutlined, UserOutlined, BarsOutlined , DownOutlined} from "@ant-des
 
 import styles from "./navbar.module.css";
 
-export default function Student() {
+export default function Student({studentID}) {
     const router = useRouter();
 
     const useMediaQuery = (width) => {
@@ -56,7 +56,7 @@ export default function Student() {
 
     const items = [
         {
-            label: <Link href="/student/profile">Profile</Link>,
+            label: <Link href={`/student/profile`}>Profile</Link>,
             key: "0",
         },
 
@@ -64,8 +64,16 @@ export default function Student() {
             type: "divider",
         },
         {
-            label: <a onClick={logoutHandler}>Logout</a>,
+            label: <Link href={`/student/accountSetting`}>Account Setting</Link>,
             key: "1",
+        },
+
+        {
+            type: "divider",
+        },
+        {
+            label: <a onClick={logoutHandler}>Logout</a>,
+            key: "2",
         },
     ];
 

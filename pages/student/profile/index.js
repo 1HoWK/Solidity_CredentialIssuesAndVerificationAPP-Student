@@ -22,12 +22,21 @@ const StudProfile = ({ studentData, certificatesData, badgesData }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const { id } = context.query;
+  const session = await getSession({ req: context.req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/educator/login",
+        permanent: false,
+      },
+    };
+  }
 
   try {
     await connectMongo();
 
-    const student = await Student.findById(id);
+    const student = await Student.findOne({ email: session.user.email });
 
     const certStudent = await Certificate_Student.find({
       studentID: student._id,
