@@ -13,9 +13,18 @@ export default function ResetPwd({ studentData }) {
 
 export const getServerSideProps = async (context) => {
   const { id } = context.query;
+  const session = await getSession({ req: context.req });
 
-  try{
-
+  if (session) {
+    return {
+      redirect: {
+        destination: "/student/certificates",
+        permanent: false,
+      },
+    };
+  }
+  
+  try {
     const student = await Student.findById(id);
 
     return {
