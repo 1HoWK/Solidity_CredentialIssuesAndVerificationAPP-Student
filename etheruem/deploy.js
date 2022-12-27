@@ -9,8 +9,8 @@ try{
     const dotenv = require("dotenv");
     require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
     
-    // console.log(`"this is the NME : "${process.env.NME}`);
-    // console.log(`"this is infura :"${process.env.INFURA}`);
+    console.log(`"this is the NME : "${process.env.NME}`);
+    console.log(`"this is infura :"${process.env.INFURA}`);
     
     const provider = new HDWalletProvider(process.env.NME, process.env.INFURA);
     const web3 = new Web3(provider);
