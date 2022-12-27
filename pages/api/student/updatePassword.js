@@ -10,16 +10,13 @@ export default async function updatePWD(req, res) {
         // console.log('CONNECTED TO MONGO');
 
         console.log("here error");
-        const selectedStudent = req.body.student;
+        const selectedStudent = req.body.student._id;
         const newPassword = req.body.password;
 
         const encryptedPassword = await hashPassword(newPassword);
         console.log(encryptedPassword);
 
-        const verifiedStudent = await Student.findById(selectedStudent._id);
-        console.log(verifiedStudent);
-
-        const updateSelectedStudentPassword = await Student.findByIdAndUpdate(verifiedStudent._id, {
+        const updateSelectedStudentPassword = await Student.findByIdAndUpdate(selectedStudent, {
             password: encryptedPassword,
         });
 
