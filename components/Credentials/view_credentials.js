@@ -354,6 +354,13 @@ export default function View_Credentials({
 
   return (
     <div>
+      <Row style={{ marginBottom: "20px", }} className={styles.view_cert_container} >
+        <Col >
+          <Button onClick={() => router.back()}
+            icon={<LeftOutlined width="150px" height="150px" />}
+            type="text"></Button>
+        </Col>
+      </Row>
       {isBelong ? (
         <>
           {isUser ? (

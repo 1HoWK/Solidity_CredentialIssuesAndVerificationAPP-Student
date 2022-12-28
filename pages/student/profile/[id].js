@@ -8,10 +8,22 @@ import Certificate from "../../../models/certificate";
 
 import { getSession } from "next-auth/react";
 import connectMongo from "../../../utils/connectMongo";
+import { useRouter } from "next/router";
+import { Button, Col, Row } from "antd";
+import { LeftOutlined } from "@ant-design/icons";
 
 const StudProfile = ({ studentData, certificatesData, badgesData }) => {
+  const router = useRouter();
+  
   return (
     <div>
+      <Row style={{ marginBottom: "20px", }}  >
+        <Col >
+          <Button onClick={() => router.back()}
+            icon={<LeftOutlined width="150px" height="150px" />}
+            type="text"></Button>
+        </Col>
+      </Row>
       <Stud_profile_form
         details={studentData}
         Certificates={certificatesData}

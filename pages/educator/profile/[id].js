@@ -7,16 +7,26 @@ import Certificate_Educator from "../../../models/certificate_educator";
 import Badge_Educator from "../../../models/badge_educator";
 import CertificateModel from "../../../models/certificate";
 import BadgeModel from "../../../models/badge";
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import { Types } from "mongoose";
+import { LeftOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
 
 export default function profile({
   educatorData,
   certificatesData,
   badgesData,
 }) {
+  const router = useRouter();
   return (
     <div>
+      <Row style={{ marginBottom: "20px", }}  >
+        <Col >
+          <Button onClick={() => router.back()}
+            icon={<LeftOutlined width="150px" height="150px" />}
+            type="text"></Button>
+        </Col>
+      </Row>
       <Edu_profile_form details={educatorData} />
       <Row>
         <Col span={12}>
