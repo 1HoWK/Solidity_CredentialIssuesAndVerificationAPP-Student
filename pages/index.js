@@ -6,7 +6,7 @@ export default function indexedDB() {
     )
 }
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async ({context}) => {
 
     try {
 

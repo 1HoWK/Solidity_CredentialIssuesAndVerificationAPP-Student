@@ -44,7 +44,7 @@ export default function View_Credentials({
 
   const claimCredential = async () => {
 
-    console.log(session.user.email);
+    // console.log(session.user.email);
 
     if (CredentialType === "certificate") {
       setIsClaimLoading(true)
@@ -295,8 +295,8 @@ export default function View_Credentials({
   const showModal2 = () => {
     setIsModalOpen(true);
     showProcess();
-    console.log("isModified");
-    console.log(isModified);
+    // console.log("isModified");
+    // console.log(isModified);
     if (isModified) {
       router.push(`/${CredentialType}s/${credential._id}`);
     }
@@ -305,8 +305,8 @@ export default function View_Credentials({
 
   const handleOk = () => {
     setIsModalOpen(false);
-    console.log("isModified");
-    console.log(isModified);
+    // console.log("isModified");
+    // console.log(isModified);
     if (isModified) {
       router.push(`/${CredentialType}s/${credential._id}`);
     }
@@ -314,8 +314,8 @@ export default function View_Credentials({
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    console.log("isModified");
-    console.log(isModified);
+    // console.log("isModified");
+    // console.log(isModified);
     if (isModified) {
       router.push(`/${CredentialType}s/${credential._id}`);
     }

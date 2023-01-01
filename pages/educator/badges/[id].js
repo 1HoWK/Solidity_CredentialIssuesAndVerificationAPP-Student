@@ -28,19 +28,19 @@ export const getServerSideProps = async (context) => {
   const { id } = context.query;
 
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
     await connectMongo();
-    console.log("CONNECTED TO MONGO");
+    // console.log("CONNECTED TO MONGO");
 
-    console.log("FETCHING DOCUMENTS");
+    // console.log("FETCHING DOCUMENTS");
     const Badge = await BadgeModel.findById(id);
-    console.log("FETCHED DOCUMENTS");
+    // console.log("FETCHED DOCUMENTS");
 
-    console.log(Badge);
+    // console.log(Badge);
 
     const badgeID = Types.ObjectId(Badge._id);
 
-    console.log("Stage 1");
+    // console.log("Stage 1");
 
     // const badgeStudent = await Badge_Student.findOne({
     //   badgeID: badgeID,
@@ -50,7 +50,7 @@ export const getServerSideProps = async (context) => {
       badgeID: badgeID,
     });
 
-    console.log("Stage 2");
+    // console.log("Stage 2");
     // console.log(badgeStudent)
 
     // const badgeStudentID = Types.ObjectId(badgeStudent.studentID);

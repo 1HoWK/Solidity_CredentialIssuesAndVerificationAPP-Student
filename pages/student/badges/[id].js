@@ -37,15 +37,15 @@ export const getServerSideProps = async (context) => {
   }
 
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
     await connectMongo();
-    console.log("CONNECTED TO MONGO");
+    // console.log("CONNECTED TO MONGO");
 
     
 
-    console.log("FETCHING DOCUMENTS");
+    // console.log("FETCHING DOCUMENTS");
     const Badge = await BadgeModel.findById(id);
-    console.log("FETCHED DOCUMENTS");
+    // console.log("FETCHED DOCUMENTS");
 
     const badgeID = Types.ObjectId(Badge._id);
 
@@ -62,7 +62,7 @@ export const getServerSideProps = async (context) => {
 
     const student = await Student.findById(badgeStudentID);
     const educator = await Educator.findById(badgeEducatorID);
-    console.log(student);
+    // console.log(student);
 
     return {
       props: {

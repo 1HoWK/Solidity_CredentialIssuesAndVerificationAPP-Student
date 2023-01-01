@@ -18,11 +18,11 @@ export default async function LoginStudent(req, res) {
     const { email, password } = req.body;
 
     const student = await Student.findOne({
-      email: email,
+      email: email.toLowerCase(),
       password: password,
     });
 
-    console.log(student);
+    // console.log(student);
 
     if(student == null){
       console.log('no matched');

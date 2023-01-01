@@ -33,7 +33,7 @@ export default function ForgotPasswordForm() {
         }),
       });
       const result = await res.json();
-      console.log(result);
+      // console.log(result);
 
       if (!res.ok) {
         throw new Error(result.message || "Something went wrong!");

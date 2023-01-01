@@ -18,8 +18,8 @@ export default async function RegisterStudent(req, res) {
 
     // console.log('CREATING DOCUMENT');
 
-    console.log(req.body);
-    console.log("backend started");
+    // console.log(req.body);
+    // console.log("backend started");
 
     // await Student.create();
 
@@ -38,7 +38,7 @@ export default async function RegisterStudent(req, res) {
       return;
     }
 
-    const emailUnique = await Student.findOne({ email: email });
+    const emailUnique = await Student.findOne({ email: email.toLowerCase() });
 
     if (emailUnique) {
       res.status(422).json({
@@ -51,7 +51,7 @@ export default async function RegisterStudent(req, res) {
 
     const student = await Student.create({
       name: name,
-      email: email,
+      email: email.toLowerCase(),
       password: hashedPassword,
     });
 

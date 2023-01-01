@@ -6,7 +6,7 @@ import Recipient from "../../../models/recipient";
 
 export default async function resetPWD(req, res) {
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
 
     await connectMongo();
     // console.log('CONNECTED TO MONGO');
@@ -16,9 +16,9 @@ export default async function resetPWD(req, res) {
     const emailRecieved = req.body.studentEmail;
     const recipientRecieved = req.body.recipient;
 
-    console.log(certificateRecieved);
-    console.log(emailRecieved);
-    console.log(recipientRecieved);
+    // console.log(certificateRecieved);
+    // console.log(emailRecieved);
+    // console.log(recipientRecieved);
 
     const claimed = true;
 
@@ -26,8 +26,8 @@ export default async function resetPWD(req, res) {
       hasClaimed: claimed,
     });
 
-    console.log("recipient");
-    console.log(recipient);
+    // console.log("recipient");
+    // console.log(recipient);
 
     const verifiedCertificate = await Certificate.findById(
       certificateRecieved._id
@@ -35,18 +35,18 @@ export default async function resetPWD(req, res) {
 
     const verifiedStudent = await Student.findOne({ email: emailRecieved });
 
-    console.log("verifiedCertificate");
+    // console.log("verifiedCertificate");
 
-    console.log(verifiedCertificate);
+    // console.log(verifiedCertificate);
 
-    console.log("verifiedStudent");
+    // console.log("verifiedStudent");
 
-    console.log(verifiedStudent);
+    // console.log(verifiedStudent);
 
     if (verifiedStudent && verifiedCertificate) {
-      console.log("start here ------------------------------");
-      console.log(certificateRecieved._id);
-      console.log(verifiedStudent._id);
+      // console.log("start here ------------------------------");
+      // console.log(certificateRecieved._id);
+      // console.log(verifiedStudent._id);
 
       //create cert student
       const certStudent = await Certificate_Student.create({
@@ -54,16 +54,16 @@ export default async function resetPWD(req, res) {
         studentID: verifiedStudent._id,
       });
 
-      console.log("the end");
+      // console.log("the end");
     } else {
       res.status(422).json({
         message: "claimed the certificate unsuccessfully!",
       });
       return;
     }
-    console.log("the end1");
+    // console.log("the end1");
     res.status(201).json({ message: "claimed the certificate successfully!" });
-    console.log("the end3");
+    // console.log("the end3");
   } catch (error) {
     console.log(error);
     res.status(422).json({

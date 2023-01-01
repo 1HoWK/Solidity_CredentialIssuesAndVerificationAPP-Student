@@ -25,7 +25,7 @@ export const getServerSideProps = async (context) => {
       };
     }
 
-  console.log(session.user.email);
+  // console.log(session.user.email);
 
   try {
     // console.log("CONNECTING TO MONGO");
@@ -35,10 +35,10 @@ export const getServerSideProps = async (context) => {
     // console.log("FETCHING DOCUMENTS");
 
     const { _id } = await Student.findOne({ email: session.user.email });
-    console.log(_id);
+    // console.log(_id);
 
     const certArr = await Certificate_Student.find({ studentID: _id });
-    console.log(certArr);
+    // console.log(certArr);
 
     const certificates = await certArr.map(async (certID) => {
       const certificate = await CertificateModel.findById({
@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
     });
     // console.log("FETCHED DOCUMENTS");
 
-    console.log("---------------------------------------");
+    // console.log("---------------------------------------");
     // console.log(certificates);
 
     const certificatesData = await Promise.all(certificates).then((values) => {

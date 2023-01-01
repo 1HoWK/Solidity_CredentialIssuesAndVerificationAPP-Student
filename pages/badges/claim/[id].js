@@ -11,8 +11,6 @@ import Badge_Educator from "../../../models/badge_educator";
 export default function Badge({ credentialData, educatorData, recipientData }) {
   return (
     <div>
-      {console.log("educator here")}
-      {console.log(recipientData)}
       <View_Credentials
         credential={credentialData}
         belongTo={""}
@@ -31,18 +29,18 @@ export const getServerSideProps = async (context) => {
   const { id, vc } = context.query;
 
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
     await connectMongo();
-    console.log("CONNECTED TO MONGO");
+    // console.log("CONNECTED TO MONGO");
 
     const recipient = await Recipient.findById(vc);
 
-    console.log("FETCHING DOCUMENTS");
+    // console.log("FETCHING DOCUMENTS");
     const badgeData = await BadgeModel.findById(id);
 
-    console.log("FETCHED DOCUMENTS");
+    // console.log("FETCHED DOCUMENTS");
 
-    console.log(badgeData);
+    // console.log(badgeData);
 
     const badgeID = Types.ObjectId(badgeData._id);
 
@@ -59,10 +57,10 @@ export const getServerSideProps = async (context) => {
 
     // const badgeStudentID = Types.ObjectId(badgeStudent.studentID);
     const badgeEducatorID = Types.ObjectId(badgeEducator.educatorID);
-    console.log("2222222222222222222222222222222222");
+    // console.log("2222222222222222222222222222222222");
     // const student = await Student.findById(badgeStudentID);
     const educator = await Educator.findById(badgeEducatorID);
-    console.log("3333333333333333333333333333333333");
+    // console.log("3333333333333333333333333333333333");
 
     // console.log(student);
     return {

@@ -32,10 +32,10 @@ export default function SignUpForm() {
     const enteredPassword2 = passwordInputRef2.current.input.value;
     const enteredName = nameInputRef.current.input.value;
 
-    console.log(enteredEmail);
-    console.log(enteredPassword1);
-    console.log(enteredPassword2);
-    console.log(enteredName);
+    // console.log(enteredEmail);
+    // console.log(enteredPassword1);
+    // console.log(enteredPassword2);
+    // console.log(enteredName);
 
     setLoading(true);
 
@@ -66,7 +66,7 @@ export default function SignUpForm() {
 
       await router.push("/student/login");
     } catch (err) {
-      console.log("Error happend on: educator sign up page");
+      // console.log("Error happend on: educator sign up page");
       console.log(err);
       setError(err.message);
     }

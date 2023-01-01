@@ -10,7 +10,7 @@ import Student from "../../../models/student";
 
 export default async function resetPWD(req, res) {
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
 
     await connectMongo();
     // console.log('CONNECTED TO MONGO');
@@ -19,14 +19,14 @@ export default async function resetPWD(req, res) {
     const certificateRecieved = req.body.certificate;
     const descriptionRecieved = req.body.desc;
 
-    console.log(certificateRecieved);
-    console.log(descriptionRecieved);
+    // console.log(certificateRecieved);
+    // console.log(descriptionRecieved);
 
     const verifiedCertificate = await Certificate.findById(
       certificateRecieved._id
     );
 
-    console.log(verifiedCertificate);
+    // console.log(verifiedCertificate);
 
     if (verifiedCertificate) {
       const updatedCertificate = await Certificate.findByIdAndUpdate(
@@ -36,9 +36,9 @@ export default async function resetPWD(req, res) {
         }
       );
 
-      console.log(updatedCertificate);
+      // console.log(updatedCertificate);
 
-      console.log("updated descrption");
+      // console.log("updated descrption");
     } else {
       res.status(422).json({
         message: "update descrption unsuccessfully!",

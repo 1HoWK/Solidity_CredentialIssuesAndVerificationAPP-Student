@@ -32,7 +32,7 @@ export default function LoginForm() {
         password: enteredPassword,
       });
 
-      console.log(result);
+      // console.log(result);
 
       if (result.error) {
         throw new Error(result.error || "message something went wrong");

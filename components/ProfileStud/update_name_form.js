@@ -29,7 +29,7 @@ export default function Update_Name_Form({ student }) {
     };
 
     const onFinish = (values) => {
-        console.log(values);
+        // console.log(values);
     };
 
     // form onsubmit fucntion
@@ -40,7 +40,7 @@ export default function Update_Name_Form({ student }) {
         try {
 
             if (enteredName) {
-                console.log("there is " + enteredName);
+                // console.log("there is " + enteredName);
 
                 const res = await fetch(`/api/student/updateName`, {
                     method: "POST",

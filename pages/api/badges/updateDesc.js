@@ -19,21 +19,21 @@ export default async function resetPWD(req, res) {
     const badgeRecieved = req.body.badge;
     const descriptionRecieved = req.body.desc;
 
-    console.log(badgeRecieved);
-    console.log(descriptionRecieved);
+    // console.log(badgeRecieved);
+    // console.log(descriptionRecieved);
 
     const verifiedBadge = await Badge.findById(badgeRecieved._id);
 
-    console.log(verifiedBadge);
+    // console.log(verifiedBadge);
 
     if (verifiedBadge) {
       const updatedBadge = await Badge.findByIdAndUpdate(verifiedBadge._id, {
         desc: descriptionRecieved,
       });
 
-      console.log(updatedBadge);
+      // console.log(updatedBadge);
 
-      console.log("updated descrption");
+      // console.log("updated descrption");
     } else {
       res.status(422).json({
         message: "update descrption unsuccessfully!",

@@ -86,7 +86,7 @@ export default function Student({ studentID }) {
   const { data: session, status } = useSession();
   const [isLogin, setIsLogin] = useState(false);
 
-  console.log(status);
+  // console.log(status);
 
   useEffect(() => {
     if (status === "authenticated") {

@@ -30,7 +30,7 @@ export const getServerSideProps = async (context) => {
     };
   }
 
-  console.log(session.user.email);
+  // console.log(session.user.email);
 
   try {
     await connectMongo();

@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
 
 export default async function resetPWD(req, res) {
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
 
     await connectMongo();
     // console.log('CONNECTED TO MONGO');
@@ -35,7 +35,7 @@ export default async function resetPWD(req, res) {
     // console.log('CREATING DOCUMENT');
     const emailRecieved = req.body.email;
 
-    console.log(emailRecieved);
+    // console.log(emailRecieved);
 
     if (!emailRecieved || !emailRecieved.includes("@")) {
       res.status(422).json({
@@ -44,9 +44,9 @@ export default async function resetPWD(req, res) {
       return;
     }
 
-    const verifiedStudent = await Student.findOne({ email: emailRecieved });
+    const verifiedStudent = await Student.findOne({ email: emailRecieved.toLowerCase() });
 
-    console.log(verifiedStudent);
+    // console.log(verifiedStudent);
 
     if (verifiedStudent) {
       const generateEmailContent = () => {
@@ -79,7 +79,7 @@ export default async function resetPWD(req, res) {
         subject: "Claim Credential",
       });
 
-      console.log("got email inside");
+      // console.log("got email inside");
     } else {
       res.status(422).json({
         message: "Email is not exist.",

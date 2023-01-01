@@ -10,7 +10,7 @@ import Student from "../../../models/student";
 
 export default async function resetPWD(req, res) {
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
 
     await connectMongo();
     // console.log('CONNECTED TO MONGO');
@@ -19,23 +19,23 @@ export default async function resetPWD(req, res) {
     const studentRecieved = req.body.student;
     const passwordRecieved = req.body.password;
 
-    console.log(studentRecieved);
-    console.log(passwordRecieved);
+    // console.log(studentRecieved);
+    // console.log(passwordRecieved);
 
     const encryptedPassword = await hashPassword(passwordRecieved);
     const verifiedStudent = await Student.findById(studentRecieved._id);
 
-    console.log(verifiedStudent);
-    console.log(encryptedPassword);
+    // console.log(verifiedStudent);
+    // console.log(encryptedPassword);
 
     if (verifiedStudent) {
       const newStudent = await Student.findByIdAndUpdate(verifiedStudent._id, {
         password: encryptedPassword,
       });
 
-      console.log(newStudent);
+      // console.log(newStudent);
 
-      console.log("updated password");
+      // console.log("updated password");
     } else {
       res.status(201).json({ message: "reset password unsuccessfully!" });
     }

@@ -23,7 +23,7 @@ export default function Account_settings_form({ studentDetail }) {
 
     const onClick = (e) => {
 
-        console.log('click ', e);
+        // console.log('click ', e);
         setMenu(e.key);
     };
 

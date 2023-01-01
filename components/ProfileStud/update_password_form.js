@@ -32,7 +32,7 @@ export default function Update_Password_Form({ studentData }) {
     };
 
     const onFinish = (values) => {
-        console.log(values);
+        // console.log(values);
     };
 
     // form onsubmit fucntion
@@ -49,7 +49,7 @@ export default function Update_Password_Form({ studentData }) {
                         "Password is not the same, Please enter the same password before submit"
                     );
                 } else {
-                    console.log("here");
+                    // console.log("here");
                     const res = await fetch(`/api/student/updatePassword`, {
                         method: "POST",
                         headers: {
@@ -60,10 +60,10 @@ export default function Update_Password_Form({ studentData }) {
                             password: password2,
                         }),
                     });
-                    console.log("here2");
+                    // console.log("here2");
 
                     const result = await res.json();
-                    console.log(result);
+                    // console.log(result);
 
                     if (!res.ok) {
                         throw new Error(result.message || "Something went wrong!");
@@ -78,7 +78,7 @@ export default function Update_Password_Form({ studentData }) {
                 throw new Error(result.message || "Current password is wrong!");
             }
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             setError(err.message);
         }
 

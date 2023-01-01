@@ -9,8 +9,8 @@ try{
     const dotenv = require("dotenv");
     require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
     
-    console.log(`"this is the NME : "${process.env.NME}`);
-    console.log(`"this is infura :"${process.env.INFURA}`);
+    // console.log(`"this is the NME : "${process.env.NME}`);
+    // console.log(`"this is infura :"${process.env.INFURA}`);
     
     const provider = new HDWalletProvider(process.env.NME, process.env.INFURA);
     const web3 = new Web3(provider);
@@ -18,7 +18,7 @@ try{
     const deploy = async () => {
       const accounts = await web3.eth.getAccounts();
     
-      console.log("Attempting to deploy from account", accounts[2]);
+      // console.log("Attempting to deploy from account", accounts[2]);
       
     
     
@@ -29,7 +29,7 @@ try{
         .send({ from: accounts[2],gas: "10000000" });
     
       
-      console.log("Contract deployed to", result.options.address);
+      // console.log("Contract deployed to", result.options.address);
       provider.engine.stop();
     };
     

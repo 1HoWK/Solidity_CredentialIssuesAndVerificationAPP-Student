@@ -61,46 +61,46 @@ export const getServerSideProps = async (context) => {
     });
 
 
-    console.log("start");
+    // console.log("start");
     //start
     const temp1Badge = await BadgeModel.find().distinct("address");
 
     const temp1 = new Map();
-    console.log("start-1");
+    // console.log("start-1");
 
     const badges = await badgeArr.map(async (tempBadgeID) => {
-      console.log("here-1");
+      // console.log("here-1");
 
       const badge = await BadgeModel.findOne({
         _id: tempBadgeID.badgeID,
       });
-      console.log("here-2");
-      console.log(badge);
+      // console.log("here-2");
+      // console.log(badge);
 
       if (!temp1.get(badge.address)) {
-        console.log("running");
+        // console.log("running");
         temp1.set(badge.address, badge._id);
       }
 
       return badge;
     });
 
-    console.log("start-2");
+    // console.log("start-2");
     const badgeData = await Promise.all(badges).then((values) => {
       return values;
     });
-    console.log("start-3");
+    // console.log("start-3");
     const finalCrendentials = [];
 
     await temp1.forEach(async (value, key) => {
-      console.log(key);
+      // console.log(key);
       let objectKey = Types.ObjectId(value);
       const cert = await BadgeModel.findById(objectKey);
 
       finalCrendentials.push(cert);
     });
 
-    console.log("start ---- 2");
+    // console.log("start ---- 2");
 
     const tempCertificate = await CertificateModel.find().distinct("address");
 
@@ -112,7 +112,7 @@ export const getServerSideProps = async (context) => {
       });
 
       if (!temp.get(certificate.address)) {
-        console.log("running");
+        // console.log("running");
         temp.set(certificate.address, certificate._id);
       }
 
@@ -126,7 +126,7 @@ export const getServerSideProps = async (context) => {
     const finalCert = [];
 
     await temp.forEach(async (value, key) => {
-      console.log(key);
+      // console.log(key);
       let objectKey = Types.ObjectId(value);
       const cert = await CertificateModel.findById(objectKey);
 

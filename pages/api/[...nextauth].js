@@ -17,7 +17,7 @@ export default NextAuth({
       async authorize(credentials) {
         await connectMongo();
 
-        const student = await Student.findOne({ email: credentials.email });
+        const student = await Student.findOne({ email: credentials.email.toLowerCase() });
 
         if (!student) {
           throw new Error("Incorrect email or password");

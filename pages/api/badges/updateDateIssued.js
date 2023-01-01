@@ -11,7 +11,7 @@ import Badge from "../../../models/badge";
 
 export default async function resetPWD(req, res) {
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
 
     await connectMongo();
     // console.log('CONNECTED TO MONGO');
@@ -20,21 +20,21 @@ export default async function resetPWD(req, res) {
     const badgeRecieved = req.body.badge;
     const dateIssuedRecieved = req.body.dateIssued;
 
-    console.log(badgeRecieved);
-    console.log(dateIssuedRecieved);
+    // console.log(badgeRecieved);
+    // console.log(dateIssuedRecieved);
 
     const verifiedBadge = await Badge.findById(badgeRecieved._id);
 
-    console.log(verifiedBadge);
+    // console.log(verifiedBadge);
 
     if (verifiedBadge) {
       const updatedBadge = await Badge.findByIdAndUpdate(verifiedBadge._id, {
         dateIssued: dateIssuedRecieved,
       });
 
-      console.log(updatedBadge);
+      // console.log(updatedBadge);
 
-      console.log("updated date issued");
+      // console.log("updated date issued");
     } else {
       res.status(422).json({
         message: "updated date issued unsuccessfully!",

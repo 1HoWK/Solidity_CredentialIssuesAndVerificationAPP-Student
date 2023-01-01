@@ -17,8 +17,6 @@ export default function Certificate({
 }) {
   return (
     <div>
-      {console.log("educator here")}
-      {console.log(recipientData)}
       <View_Credentials
         credential={credentialData}
         belongTo={''}
@@ -37,18 +35,18 @@ export const getServerSideProps = async (context) => {
   const { id, vc } = context.query;
 
   try {
-    console.log("CONNECTING TO MONGO");
+    // console.log("CONNECTING TO MONGO");
     await connectMongo();
-    console.log("CONNECTED TO MONGO");
+    // console.log("CONNECTED TO MONGO");
 
     const recipient = await Recipient.findById(vc);
 
-    console.log("FETCHING DOCUMENTS");
+    // console.log("FETCHING DOCUMENTS");
     const Certificate = await CertificateModel.findById(id);
 
-    console.log("FETCHED DOCUMENTS");
+    // console.log("FETCHED DOCUMENTS");
 
-    console.log(Certificate);
+    // console.log(Certificate);
 
     const certID = Types.ObjectId(Certificate._id);
 
@@ -66,10 +64,10 @@ export const getServerSideProps = async (context) => {
 
     // const certStudentID = Types.ObjectId(certStudent.studentID);
     const certEducatorID = Types.ObjectId(certEducator.educatorID);
-    console.log("2222222222222222222222222222222222");
+    // console.log("2222222222222222222222222222222222");
     // const student = await Student.findById(certStudentID);
     const educator = await Educator.findById(certEducatorID);
-    console.log("3333333333333333333333333333333333");
+    // console.log("3333333333333333333333333333333333");
 
     // console.log(student);
     return {
